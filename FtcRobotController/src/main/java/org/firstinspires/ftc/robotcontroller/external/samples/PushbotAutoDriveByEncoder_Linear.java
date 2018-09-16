@@ -64,7 +64,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
 @Disabled
-public class  PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
+public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
@@ -163,7 +163,7 @@ public class  PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
                    (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
 
                 // Display it for the driver.
-                //telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
                                             robot.leftDrive.getCurrentPosition(),
                                             robot.rightDrive.getCurrentPosition());
