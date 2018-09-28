@@ -40,7 +40,7 @@ public class ClubFairBotAngleTest extends LinearOpMode {
     /* Declare OpMode members. */
     ClubFairBotHardware robot   = new ClubFairBotHardware();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
-
+    //hi
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
