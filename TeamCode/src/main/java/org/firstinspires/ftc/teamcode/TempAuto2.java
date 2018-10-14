@@ -53,9 +53,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //
 //AT5CUvf/////AAAAGaBn6TlejU79iRr5dpGz0Msa4+WbMquS0c0rHQGMURBOGIxPznOmaavjYRYfWHE/qRnpaHDvKIVV1drOmZguwKjiTVfUzVpkRgxdFzcVDsNBldxzhrcSl+bRKGlNv3zKHDfaOJioTa7uzIN/uKUzdJPX+o5PQQxRPYXBuIvAkASbZ9/MVjq5u3Jltyw3Gz9DCPVgxqcMKILOwv9FpMDMRTcgeRwk7f+pPd8f5FmB8ehr3xiDbPxydmYAkpuqQ6Mx2qiggbSlzl4uTm2JeqOP3hbej+ozcevtHKh9C4S3eKodfDUpKekBfdOuR2aer0FwrWxfAqmdOewy5Tei71lLAOgEzx+vo6OPKpSzbTh1gFzI
 
-@Autonomous(name="TempAuto", group="Zippo")
+@Autonomous(name="TempAuto2", group="Zippo")
 //@Disabled
-public class TempAuto extends LinearOpMode {
+public class TempAuto2 extends LinearOpMode {
 
     /* Declare OpMode members. */
     TempRuckusHardware_NoServo robot   = new TempRuckusHardware_NoServo();   // Use a Pushbot's hardware
@@ -148,17 +148,8 @@ public class TempAuto extends LinearOpMode {
         // Main program
 
         // Forward 16"
-        encoderDrive(0.3, 16, 16, 100);
-        // Turn right 90 degrees
-        encoderDrive(0.3, 3,-3,5);
-        // Back 36"
-        encoderDrive(0.3,-36,-36,100);
-        // Turn 140 degrees
-        encoderDrive(0.3,-2,2,5);
-        // Back 36"
-        encoderDrive(0.3,-36,-36,5);
-        // Forward 72", power over crater
-        encoderDrive(1,72,72,100);
+        encoderDrive(0.3, -10, -9999, 100);
+
 
 
 
