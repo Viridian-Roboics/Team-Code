@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="ClubFairBotTeleop", group="ClubFairBot")
+@TeleOp(name="ColorWarsBot_DualDrive", group="ClubFairBot")
 //@Disabled
 
 //THE KEY BELOW IS FOR USING IMAGE RECOGNITION -PULKIT
