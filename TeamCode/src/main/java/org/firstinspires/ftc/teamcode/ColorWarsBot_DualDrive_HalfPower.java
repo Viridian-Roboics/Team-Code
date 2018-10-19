@@ -30,8 +30,8 @@ public class ColorWarsBot_DualDrive_HalfPower extends OpMode{
     public void loop() {
 
 //      MAIN DRIVING CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        lPower = 0.5*-gamepad1.left_stick_y;
-        rPower = 0.5*-gamepad2.left_stick_y;
+        lPower = 0.5*gamepad1.left_stick_y;
+        rPower = 0.5*gamepad2.left_stick_y;
 
 //      CONSTRAIN MOTOR POWERS: -1 to 1 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         if(lPower > 1)
