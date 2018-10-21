@@ -53,12 +53,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //
 //AT5CUvf/////AAAAGaBn6TlejU79iRr5dpGz0Msa4+WbMquS0c0rHQGMURBOGIxPznOmaavjYRYfWHE/qRnpaHDvKIVV1drOmZguwKjiTVfUzVpkRgxdFzcVDsNBldxzhrcSl+bRKGlNv3zKHDfaOJioTa7uzIN/uKUzdJPX+o5PQQxRPYXBuIvAkASbZ9/MVjq5u3Jltyw3Gz9DCPVgxqcMKILOwv9FpMDMRTcgeRwk7f+pPd8f5FmB8ehr3xiDbPxydmYAkpuqQ6Mx2qiggbSlzl4uTm2JeqOP3hbej+ozcevtHKh9C4S3eKodfDUpKekBfdOuR2aer0FwrWxfAqmdOewy5Tei71lLAOgEzx+vo6OPKpSzbTh1gFzI
 
-@Autonomous(name="TempAuto2", group="Zippo")
+@Autonomous(name="TempAuto3", group="Zippo")
 //@Disabled
-public class TempAuto2 extends LinearOpMode {
+public class TempAuto3 extends LinearOpMode {
 
     /* Declare OpMode members. */
-    RuckusHardware robot   = new RuckusHardware();   // Use a Pushbot's hardware
+    TempRuckusHardware_NoServo robot   = new TempRuckusHardware_NoServo();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     //static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // This is for the AndyMark motors //Use 560 for neverest 20, 1120 for neverest 40
@@ -146,16 +146,48 @@ public class TempAuto2 extends LinearOpMode {
         sleep(1500);
 
         // Main program
+        //initialize turning angles
+        double turnThirty = turnAngle(16, 30);
+        double turnNinety = turnAngle(16, 90);
+        double turnAround = turnAngle(16, 180);
 
+        //this is a temporary autonomous. Actual autonomous under file name PhilAutoCrater.java
+        //turn 180 degrees
+        encoderDrive(0.3, turnAround, -turnAround, 10);
         // Forward 16"
-        encoderDrive(0.3, 10, 10, 10);
-
+        encoderDrive(0.3, 16, 16, 10);
+        //turn 90 degrees
+        encoderDrive(0.3, turnNinety, -turnNinety, 10);
+        //backward 36"
+        encoderDrive(0.3, -36, -36, 10);
+        //turn 30 degrees
+        encoderDrive(0.3, -turnThirty, turnThirty,10);
+        //backward 36"
+        encoderDrive(0.3, -36, -36, 10);
+        //simulate dropping marker
+        sleep(2000);
+        //forward 72"
+        encoderDrive(0.3, 70, 70, 10);
+        encoderDrive(1.0, 10, 10, 10);
 
 
 
         telemetry.addData("Dude this is working good job", "Complete");
         telemetry.update();
 
+    }
+
+    public static double turnAngle(double robotWidth, double angle)
+    {
+        //takes the width of the robot and calculates how far each tread needs to move
+        //all movements are optimized to use the least area for movement
+        double fractionOfCirc = angle/360.0;
+        double circumference = 2 * Math.PI * robotWidth;
+        double treadTravel = fractionOfCirc * circumference;
+
+        treadTravel = Math.round(treadTravel);
+
+        return treadTravel;
     }
 
     //drive methods
