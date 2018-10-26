@@ -183,7 +183,7 @@ public class NavAutoC extends LinearOpMode {
             *                value is negative, the right tread will move backwards and the robot
             *                will turn to the right; if the value is positive, the right tread will
             *                move forwards and the robot will turn to the left.
-            * First, moveRobot acquires the position it must turn in order to 
+            * First, moveRobot acquires the position it must turn in order to
         */
         double turningAngle = findAngle(currPos, goalPos);
         double treadTravel = turnAngle(16, turningAngle);

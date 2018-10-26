@@ -53,7 +53,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //
 //AT5CUvf/////AAAAGaBn6TlejU79iRr5dpGz0Msa4+WbMquS0c0rHQGMURBOGIxPznOmaavjYRYfWHE/qRnpaHDvKIVV1drOmZguwKjiTVfUzVpkRgxdFzcVDsNBldxzhrcSl+bRKGlNv3zKHDfaOJioTa7uzIN/uKUzdJPX+o5PQQxRPYXBuIvAkASbZ9/MVjq5u3Jltyw3Gz9DCPVgxqcMKILOwv9FpMDMRTcgeRwk7f+pPd8f5FmB8ehr3xiDbPxydmYAkpuqQ6Mx2qiggbSlzl4uTm2JeqOP3hbej+ozcevtHKh9C4S3eKodfDUpKekBfdOuR2aer0FwrWxfAqmdOewy5Tei71lLAOgEzx+vo6OPKpSzbTh1gFzI
 
-@Autonomous(name="PhilCrater", group="Zippo")
+@Autonomous(name="PhilCrater2", group="Zippo")
 //@Disabled
 public class PhilAutoCrater extends LinearOpMode {
 
@@ -140,7 +140,7 @@ public class PhilAutoCrater extends LinearOpMode {
         encoderDrive(0.3, turnAround, -turnAround, 10);
         // Forward 20"
         encoderDrive(0.3, 20, 20, 10);
-        //insert sampling here
+        sleep(2000);
         //turn 90 degrees
         encoderDrive(0.3, turnNinety, -turnNinety, 10);
         //backward 36"
@@ -157,7 +157,7 @@ public class PhilAutoCrater extends LinearOpMode {
 
 
 
-        telemetry.addData("Dude this is working good job", "Complete");
+        telemetry.addData("Complete", "Complete");
         telemetry.update();
 
     }

@@ -32,8 +32,8 @@ public class ClubFairBotTeleop extends OpMode{
     public void loop() {
 
 //      MAIN DRIVING CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        lPower = -gamepad1.left_stick_y;
-        rPower = -gamepad1.right_stick_y;
+        lPower = gamepad1.left_stick_y;
+        rPower = gamepad1.right_stick_y;
 
 //      CONSTRAIN MOTOR POWERS: -1 to 1 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         if(lPower > 1)
