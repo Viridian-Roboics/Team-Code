@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -53,12 +54,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //
 //AT5CUvf/////AAAAGaBn6TlejU79iRr5dpGz0Msa4+WbMquS0c0rHQGMURBOGIxPznOmaavjYRYfWHE/qRnpaHDvKIVV1drOmZguwKjiTVfUzVpkRgxdFzcVDsNBldxzhrcSl+bRKGlNv3zKHDfaOJioTa7uzIN/uKUzdJPX+o5PQQxRPYXBuIvAkASbZ9/MVjq5u3Jltyw3Gz9DCPVgxqcMKILOwv9FpMDMRTcgeRwk7f+pPd8f5FmB8ehr3xiDbPxydmYAkpuqQ6Mx2qiggbSlzl4uTm2JeqOP3hbej+ozcevtHKh9C4S3eKodfDUpKekBfdOuR2aer0FwrWxfAqmdOewy5Tei71lLAOgEzx+vo6OPKpSzbTh1gFzI
 
-@Autonomous(name="TempAuto", group="Zippo")
+//@Autonomous(name="TempAuto", group="Zippo")
 //@Disabled
-public class TempAuto extends LinearOpMode {
+public class NavAutoC extends LinearOpMode {
 
     /* Declare OpMode members. */
-    TempRuckusHardware_NoServo robot   = new TempRuckusHardware_NoServo();   // Use a Pushbot's hardware
+    RuckusHardware robot   = new RuckusHardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     //static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // This is for the AndyMark motors //Use 560 for neverest 20, 1120 for neverest 40
@@ -71,6 +72,11 @@ public class TempAuto extends LinearOpMode {
     static final double     SERVO_DOWN              = 0;
     static final double     SERVO_CLOSED            = 0.2;
     static final double     SERVO_OPEN              = 0.8;
+
+    private static final float mmPerInch        = 25.4f;
+    private static final float mmFTCFieldWidth  = (12*6) * mmPerInch;       // the width of the FTC field (from the center point to the outer panels)
+    private static final float mmTargetHeight   = (6) * mmPerInch;          // the height of the center of the target image above the floor
+
 
     BNO055IMU imu;
 
@@ -147,26 +153,85 @@ public class TempAuto extends LinearOpMode {
 
         // Main program
 
-        // Forward 16"
-        encoderDrive(0.3, 16, 16, 100);
-        // Turn right 90 degrees
-        encoderDrive(0.3, 3,-3,5);
-        // Back 36"
-        encoderDrive(0.3,-36,-36,100);
-        // Turn 140 degrees
-        encoderDrive(0.3,-2,2,5);
-        // Back 36"
-        encoderDrive(0.3,-36,-36,5);
-        // Forward 72", power over crater
-        encoderDrive(1,72,72,100);
+        while (opModeIsActive())
+        {
+            VectorF translation = lastLocation.getTranslation();
+            float xPos = translation.get(0)/mmPerInch;
+            float yPos = translation.get(1)/mmPerInch;
+            float zPos = translation.get(2)/mmPerInch;
 
+            telemetry.addData("Position (inches)","{X, Y, Z} = .1%f, .1%f, .1%f", xPos, yPos, zPos);
 
-
-        telemetry.addData("Dude this is working good job", "Complete");
-        telemetry.update();
+            telemetry.addData("Dude this is working good job", "Complete");
+            telemetry.update();
+        }
 
     }
 
+    public void moveRobot(double speed, double[] currPos, double[] goalPos, double rightPower)
+    {
+        /*
+            * This is a method to move the angle from one point to another
+            * Viridian Robotics October 2018
+            *
+            * Parameters
+            *   -speed: speed at which the robot travels
+            *   -currPos: current position of the robot
+            *   -goalPos: goal position of the robot
+            *   -rightPower: direction that the right tread must move. This indicates the direction
+            *                that the robot will turn (left x degrees or right x degrees). If the
+            *                value is negative, the right tread will move backwards and the robot
+            *                will turn to the right; if the value is positive, the right tread will
+            *                move forwards and the robot will turn to the left.
+            * First, moveRobot acquires the position it must turn in order to 
+        */
+        double turningAngle = findAngle(currPos, goalPos);
+        double treadTravel = turnAngle(16, turningAngle);
+
+        double leftPower = -1 * (rightPower);
+
+        double xPos = currPos[0] - goalPos[0];
+        double yPos = currPos[1] - goalPos[1];
+
+        double driveInches = Math.sqrt((yPos*yPos) + (xPos*xPos)); //using pythagorean theorem
+
+        encoderDrive(speed, leftPower*treadTravel, rightPower*treadTravel, 10); //turn to proper heading
+        encoderDrive(speed, driveInches, driveInches, 10);
+
+
+
+    }
+
+    public static double findAngle(double[] currPos, double[] goalPos)
+    {
+        double currXPos = currPos[0];
+        double currYPos = currPos[1];
+
+        double goalXPos = goalPos[0];
+        double goalYPos = goalPos[1];
+
+        double xComp = Math.abs((currXPos-goalXPos));
+        double yComp = Math.abs((currYPos-goalYPos));
+
+        double turningAngle = 180 - Math.toDegrees(Math.atan((yComp/xComp)));
+
+        turningAngle = Math.round(turningAngle);
+
+        return turningAngle;
+    }
+
+    public static double turnAngle(double robotWidth, double angle)
+    {
+        //takes the width of the robot and calculates how far each tread needs to move
+        //all movements are optimized to use the least area for movement
+        double fractionOfCirc = angle/360.0;
+        double circumference = 2 * Math.PI * robotWidth;
+        double treadTravel = fractionOfCirc * circumference;
+
+        treadTravel = Math.round(treadTravel);
+
+        return treadTravel;
+    }
     //drive methods
     public void gyroDrive(double target, String xyz, double power, double timeoutS)
     {
