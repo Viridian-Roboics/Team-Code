@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -14,6 +15,8 @@ public class RuckusHardware
     /* Public OpMode members. */
     public DcMotor motorLeft   = null;
     public DcMotor  motorRight  = null;
+    public DcMotor motorFront   = null;
+    public DcMotor  motorBack  = null;
 
     public Servo servoLeft = null;
     public Servo servoRight = null;
@@ -36,15 +39,23 @@ public class RuckusHardware
         motorRight.setDirection(DcMotor.Direction.REVERSE);
         motorLeft.setDirection(DcMotor.Direction.FORWARD);
 
+        motorFront  = hwMap.get(DcMotor.class, "motorLeft");
+        motorBack = hwMap.get(DcMotor.class, "motorRight");
+        motorFront.setDirection(DcMotor.Direction.FORWARD);
+        motorBack.setDirection(DcMotor.Direction.FORWARD);
+
         // Set all motors to zero power
         motorLeft.setPower(0);
         motorRight.setPower(0);
-
+        motorFront.setPower(0);
+        motorBack.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
         servoLeft = hwMap.get(Servo.class, "servoLeft");

@@ -15,6 +15,8 @@ public class RuckusTeleop extends OpMode{
     // Create variables for motor power
     private double lPower = 0;
     private double rPower = 0;
+    private double fPower = 0;
+    private double bPower = 0;
 
     @Override
     public void init() {
@@ -30,6 +32,9 @@ public class RuckusTeleop extends OpMode{
 //      MAIN DRIVING CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         lPower = -gamepad1.left_stick_y;
         rPower = -gamepad1.right_stick_y;
+        fPower = -gamepad2.left_stick_y;
+        bPower = -gamepad2.right_stick_y;
+
 
 //      CONSTRAIN MOTOR POWERS: -1 to 1 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         if(lPower > 1)
@@ -50,21 +55,53 @@ public class RuckusTeleop extends OpMode{
             rPower = -1;
         }
 
+        if(fPower > 1)
+        {
+            fPower = 1;
+        }
+        else if (fPower < -1)
+        {
+            fPower = -1;
+        }
+
+        if(bPower > 1)
+        {
+            bPower = 1;
+        }
+        else if (bPower < -1)
+        {
+            bPower = -1;
+        }
+
+
 //      SCALING POWERS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         if(gamepad1.right_bumper)
         {
             lPower *= 0.3;
             rPower *= 0.3;
         }
+        if(gamepad2.right_bumper)
+        {
+            bPower *= 0.3;
+        }
+        if(gamepad2.left_bumper)
+        {
+            fPower *= 0.3;
+        }
+
 
 //      SETTING POWERS AND POSITIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         robot.motorLeft.setPower(lPower);
         robot.motorRight.setPower(rPower);
+        robot.motorBack.setPower(bPower);
+        robot.motorFront.setPower(fPower);
 
 //      TELEMETRY
-        telemetry.addData("Left Motor Power", gamepad1.left_stick_y);
-        telemetry.addData("Right Motor Power", gamepad1.right_stick_y);
+        telemetry.addData("Left Motor Power", lPower);
+        telemetry.addData("Right Motor Power", rPower);
+        telemetry.addData("Back Motor Power", bPower);
+        telemetry.addData("Front Motor Power", fPower);
     }
 
 //--------------------------------- FUNCTIONS ----------------------------------------------------
