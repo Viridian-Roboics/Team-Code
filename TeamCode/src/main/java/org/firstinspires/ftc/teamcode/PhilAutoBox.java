@@ -53,9 +53,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //
 //AT5CUvf/////AAAAGaBn6TlejU79iRr5dpGz0Msa4+WbMquS0c0rHQGMURBOGIxPznOmaavjYRYfWHE/qRnpaHDvKIVV1drOmZguwKjiTVfUzVpkRgxdFzcVDsNBldxzhrcSl+bRKGlNv3zKHDfaOJioTa7uzIN/uKUzdJPX+o5PQQxRPYXBuIvAkASbZ9/MVjq5u3Jltyw3Gz9DCPVgxqcMKILOwv9FpMDMRTcgeRwk7f+pPd8f5FmB8ehr3xiDbPxydmYAkpuqQ6Mx2qiggbSlzl4uTm2JeqOP3hbej+ozcevtHKh9C4S3eKodfDUpKekBfdOuR2aer0FwrWxfAqmdOewy5Tei71lLAOgEzx+vo6OPKpSzbTh1gFzI
 
-@Autonomous(name="TempAuto3", group="Zippo")
+@Autonomous(name="PhilCrater", group="Zippo")
 //@Disabled
-public class TempAuto3 extends LinearOpMode {
+public class PhilAutoBox extends LinearOpMode {
 
     /* Declare OpMode members. */
     TempRuckusHardware_NoServo robot   = new TempRuckusHardware_NoServo();   // Use a Pushbot's hardware
@@ -123,21 +123,6 @@ public class TempAuto3 extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        //initialize VuMark
-        /*
-        relicTrackables.activate();
-        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-
-        imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
-
-        //print the angles at the beginning of the program
-        telemetry.addData("Z", readAngle("z"));
-        telemetry.addData("y", readAngle("y"));
-        telemetry.addData("x", readAngle("x"));
-        telemetry.update();
-        */
-
-
         //telemetry.addData("Vuforia Status", vuMark);
         telemetry.addData("Z", readAngle("z"));
         telemetry.addData("y", readAngle("y"));
@@ -147,30 +132,22 @@ public class TempAuto3 extends LinearOpMode {
 
         // Main program
         //initialize turning angles
-        double turnThirty = turnAngle(16, 30);
+        double turnOneForty = turnAngle(16, 140);
         double turnNinety = turnAngle(16, 90);
         double turnAround = turnAngle(16, 180);
 
-        //this is a temporary autonomous. Actual autonomous under file name PhilAutoCrater.java
         //turn 180 degrees
         encoderDrive(0.3, turnAround, -turnAround, 10);
-        // Forward 16"
-        encoderDrive(0.3, 16, 16, 10);
+        //forward 20"
+        encoderDrive(0.3, 20, 20, 10);
+        //insert sampling here
         //turn 90 degrees
-        encoderDrive(0.3, turnNinety, -turnNinety, 10);
-        //backward 36"
-        encoderDrive(0.3, -36, -36, 10);
-        //turn 30 degrees
-        encoderDrive(0.3, -turnThirty, turnThirty,10);
-        //backward 48"
-        encoderDrive(0.3, -48, -48, 10);
-        //simulate dropping marker
-        sleep(2000);
-        //forward 72"
-        encoderDrive(0.3, 70, 70, 10);
-        encoderDrive(1.0, 10, 10, 10);
-
-
+        encoderDrive(0.3, -turnNinety, turnNinety, 10);
+        //forward x"
+        //turn 140 degrees
+        encoderDrive(0.3, turnOneForty, -turnOneForty, 10);
+        //forward 36"
+        encoderDrive(0.3, 36, 36, 10);
 
         telemetry.addData("Dude this is working good job", "Complete");
         telemetry.update();

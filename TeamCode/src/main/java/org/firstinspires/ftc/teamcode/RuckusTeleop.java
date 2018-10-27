@@ -3,10 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
-@TeleOp(name="RuckusTeleop", group="Zippo")
-//@Disabled
+//@TeleOp(name="RuckusTeleop", group="Zippo")
 
 //THE KEY BELOW IS FOR USING IMAGE RECOGNITION -PULKIT
 //AT5CUvf/////AAAAGaBn6TlejU79iRr5dpGz0Msa4+WbMquS0c0rHQGMURBOGIxPznOmaavjYRYfWHE/qRnpaHDvKIVV1drOmZguwKjiTVfUzVpkRgxdFzcVDsNBldxzhrcSl+bRKGlNv3zKHDfaOJioTa7uzIN/uKUzdJPX+o5PQQxRPYXBuIvAkASbZ9/MVjq5u3Jltyw3Gz9DCPVgxqcMKILOwv9FpMDMRTcgeRwk7f+pPd8f5FmB8ehr3xiDbPxydmYAkpuqQ6Mx2qiggbSlzl4uTm2JeqOP3hbej+ozcevtHKh9C4S3eKodfDUpKekBfdOuR2aer0FwrWxfAqmdOewy5Tei71lLAOgEzx+vo6OPKpSzbTh1gFzI
@@ -15,13 +12,11 @@ public class RuckusTeleop extends OpMode{
 
     RuckusHardware robot  = new RuckusHardware();
 
+    // Create variables for motor power
     private double lPower = 0;
     private double rPower = 0;
-    private double liftPower = 0;
-    private double armPower = 0;
-    private double servoLeftPos = 0.5;
-    private double servoRightPos = 0.5;
-
+    private double fPower = 0;
+    private double bPower = 0;
 
     @Override
     public void init() {
@@ -29,57 +24,16 @@ public class RuckusTeleop extends OpMode{
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-        //robot.sensorColor.enableLed(false);
-        servoLeftPos = .2;
-        servoRightPos = .2;
-
     }
 
     @Override
     public void loop() {
 
-
-
-
-
-
-
 //      MAIN DRIVING CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         lPower = -gamepad1.left_stick_y;
-        rPower = -gamepad1.left_stick_y;
-
-//      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-//      RELIC ARM CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        armPower = -gamepad2.right_stick_y;
-
-        /*
-        lukey spooky
-        if(gamepad2.left_bumper)
-        {
-            if(servoRelicPos > 0) {
-                servoRelicPos -= 0.05;
-            }
-        }else if(gamepad2.right_bumper) {
-            if(servoRelicPos < 1) {
-                servoRelicPos += 0.05;
-            }
-        }else if(gamepad2.x){
-            if(!(servoRelicPos == 0)){
-                servoRelicPos = 0;
-            }
-        }else if(gamepad2.b){
-            if(!(servoRelicPos ==1)){
-                servoRelicPos = 1;
-            }
-        }
-        */
-//      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
+        rPower = -gamepad1.right_stick_y;
+        fPower = -gamepad2.left_stick_y;
+        bPower = -gamepad2.right_stick_y;
 
 
 //      CONSTRAIN MOTOR POWERS: -1 to 1 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -101,98 +55,23 @@ public class RuckusTeleop extends OpMode{
             rPower = -1;
         }
 
-        if(liftPower > 1)
+        if(fPower > 1)
         {
-            liftPower = 1;
+            fPower = 1;
         }
-        else if (liftPower < -1)
+        else if (fPower < -1)
         {
-            liftPower = -1;
+            fPower = -1;
         }
 
-        if(armPower > 1)
+        if(bPower > 1)
         {
-            armPower = 1;
+            bPower = 1;
         }
-        else if (armPower < -1)
+        else if (bPower < -1)
         {
-            armPower = -1;
+            bPower = -1;
         }
-//      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-
-//      GLYPH ARM CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        if(gamepad1.dpad_down)
-        {
-            liftPower = .5;
-        }
-        else if(gamepad1.dpad_up)
-        {
-            liftPower = .5;
-        }
-        else
-        {
-            liftPower = 0;
-        }
-
-        if(gamepad1.left_trigger > 0)
-        {
-            servoLeftPos -= 0.1;
-            servoRightPos -= 0.1;
-        }else if(gamepad1.right_trigger > 0) {
-            servoLeftPos += 0.1;
-            servoRightPos += 0.1;
-        }
-    // presets for glyph claw
-        if(gamepad1.x){
-            servoLeftPos = .8;
-            servoRightPos = .8;
-        }
-        if(gamepad1.b){
-            servoLeftPos = .2;
-            servoRightPos = .2;
-
-        }
-//      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-//      CONSTRAIN GLYPH SERVO POSITIONS (FROM 0.2 to 0.8 JUST BECAUSE) <<<<<<<<<<<<<<<<<<<<<
-
-        if(servoLeftPos > .8)
-        {
-            servoLeftPos = .8;
-        }
-        else if (servoLeftPos < 0.2)
-        {
-            servoLeftPos = 0.2;
-        }
-
-        if(servoRightPos > .8)
-        {
-            servoRightPos = .8;
-        }
-        else if (servoRightPos < 0.2)
-        {
-            servoRightPos = 0.2;
-        }
-
-//      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-//      JEWEL HITTER CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
 
 
 //      SCALING POWERS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -200,50 +79,29 @@ public class RuckusTeleop extends OpMode{
         {
             lPower *= 0.3;
             rPower *= 0.3;
-            liftPower *= 0.3;
-            armPower *= 0.3;
         }
-
-        //lPower = scalePower(lPower);
-        //rPower = scalePower(rPower);
-        //latPower = scalePower(latPower);
-        //liftPower = scalePower(liftPower);
-        //armPower = scalePower(armPower);
-        //relicPower = scalePower(relicPower);
-//      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
+        if(gamepad2.right_bumper)
+        {
+            bPower *= 0.3;
+        }
+        if(gamepad2.left_bumper)
+        {
+            fPower *= 0.3;
+        }
 
 
 //      SETTING POWERS AND POSITIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        robot.servoRight.setPosition(servoRightPos);
-        robot.servoLeft.setPosition(servoLeftPos);
 
         robot.motorLeft.setPower(lPower);
         robot.motorRight.setPower(rPower);
-//      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
 
 
 //      TELEMETRY
-        telemetry.addData("Right-X", gamepad1.right_stick_x);
-        telemetry.addData("lefttrig", gamepad1.left_trigger);
-        telemetry.addData("righttrig", gamepad1.right_trigger);
-        telemetry.addData("Left-Y", gamepad1.left_stick_y);
-        telemetry.addData("Right-Y", gamepad1.right_stick_y);
-        telemetry.addData("Left-Power", scalePower(lPower));
-        telemetry.addData("Right-Power", scalePower(rPower));
-        telemetry.addData("Red", robot.sensorColorR.blue());
-        telemetry.addData("Green", robot.sensorColorR.green());
-        telemetry.addData("Blue", robot.sensorColorR.blue());
-        telemetry.addData("Pulley-Power", scalePower(liftPower));
-        telemetry.addData("leftClaw-Position", servoLeftPos);
-        telemetry.addData("RightClaw-Position", servoRightPos);
+        telemetry.addData("Left Motor Power", lPower);
+        telemetry.addData("Right Motor Power", rPower);
+        telemetry.addData("Back Motor Power", bPower);
+        telemetry.addData("Front Motor Power", fPower);
     }
-
 
 //--------------------------------- FUNCTIONS ----------------------------------------------------
 
