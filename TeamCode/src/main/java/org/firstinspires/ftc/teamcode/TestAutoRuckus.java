@@ -157,6 +157,7 @@ public class TestAutoRuckus extends LinearOpMode {
                           robot.motorRight.getCurrentPosition());
         telemetry.update();
 
+        double turnThirty = turnDistance(16, 30);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -173,7 +174,7 @@ public class TestAutoRuckus extends LinearOpMode {
         latEncoderDrive(DRIVE_SPEED, -3, -3, 5);
 
         encoderDrive(DRIVE_SPEED, -5, -5, 5);
-        latEncoderDrive(DRIVE_SPEED, 7, 7,5);
+        latEncoderDrive(DRIVE_SPEED, 3, 3,5);
 
         encoderDrive(DRIVE_SPEED, -19, -19,5);
 
@@ -182,41 +183,14 @@ public class TestAutoRuckus extends LinearOpMode {
         robot.servoLeft.setPosition(1.0);
         robot.servoRight.setPosition(1.0);
 
-        sleep(4000);
-        double whiteValueL = Math.pow(580.7 - robot.sensorColorL.red(), 4) + Math.pow(612.2 - robot.sensorColorL.green(), 4)
-                + Math.pow(554.5 - robot.sensorColorL.blue(), 4)*1.2;
-        double yellowValueL = Math.pow(180.1 - robot.sensorColorL.red(), 4) + Math.pow(129.8 - robot.sensorColorL.green(), 4)
-                + Math.pow(78.8 - robot.sensorColorL.blue(), 4)*1.2;
+        sleep(500);
 
-        double whiteValueR = Math.pow(580.7 - robot.sensorColorR.red(), 4) + Math.pow(612.2 - robot.sensorColorR.green(), 4)
-                + Math.pow(554.5 - robot.sensorColorR.blue(), 4)*1.2;
-        double yellowValueR = Math.pow(180.1 - robot.sensorColorR.red(), 4) + Math.pow(129.8 - robot.sensorColorR.green(), 4)
-                + Math.pow(78.8 - robot.sensorColorR.blue(), 4)*1.2;
+        encoderDrive(DRIVE_SPEED, -20, -20, 5);
 
-        if(whiteValueL < yellowValueL)
-        {
-            //the middle one is white
-        }
-        else if (whiteValueL > yellowValueL)
-        {
-            encoderDrive(DRIVE_SPEED, -15, -15, 5);
-            sleep(1000);
-            robot.servoMark.setPosition(1.0);
-        }
+        robot.servoMark.setPosition(1.0);
+        sleep(1000);
 
-        if(whiteValueR < yellowValueR)
-        {
-            //the right one is white
-        }
-        else if(whiteValueR > yellowValueR)
-        {
-            //the right one is yellow
-        }
-        else{
-            encoderDrive(DRIVE_SPEED, -15, -15, 5);
-            sleep(1000);
-            robot.servoMark.setPosition(1.0);
-        }
+        rotationEncoderDrive(DRIVE_SPEED, -turnThirty, turnThirty, turnThirty, -turnThirty, 5);
 
 
         telemetry.addData("Path", "Complete");
