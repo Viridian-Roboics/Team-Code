@@ -44,7 +44,7 @@ public class TestRuckusHardware
 
         servoRight = hwMap.get(Servo.class, "servoRight");
         servoLeft = hwMap.get(Servo.class, "servoLeft");
-        //servoMark = hwMap.get(Servo.class, "servoMark");
+        servoMark = hwMap.get(Servo.class, "servoMark");
 
 
 
@@ -68,7 +68,7 @@ public class TestRuckusHardware
 
         servoLeft.setPosition(0.8);
         servoRight.setPosition(0.8);
-        servoMark.setPosition(0.1);
+        servoMark.setPosition(0.0);
 
 
 
