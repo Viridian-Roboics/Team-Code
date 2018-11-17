@@ -22,6 +22,7 @@ public class TestRuckusHardware
 
     public Servo servoLeft;
     public Servo servoRight;
+    public Servo servoMark;
 
     ColorSensor sensorColorR = null;
     ColorSensor sensorColorL = null;
@@ -43,13 +44,14 @@ public class TestRuckusHardware
 
         servoRight = hwMap.get(Servo.class, "servoRight");
         servoLeft = hwMap.get(Servo.class, "servoLeft");
+        //servoMark = hwMap.get(Servo.class, "servoMark");
 
 
 
-        motorRight.setDirection(DcMotor.Direction.REVERSE);
-        motorLeft.setDirection(DcMotor.Direction.FORWARD);
-        motorFront.setDirection(DcMotor.Direction.REVERSE);
-        motorBack.setDirection(DcMotor.Direction.FORWARD);
+        motorRight.setDirection(DcMotor.Direction.FORWARD);
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorFront.setDirection(DcMotor.Direction.FORWARD);
+        motorBack.setDirection(DcMotor.Direction.REVERSE);
         motorHook.setDirection(DcMotor.Direction.FORWARD);
 
 
@@ -61,8 +63,12 @@ public class TestRuckusHardware
         motorBack.setPower(0);
         motorHook.setPower(0);
 
-        servoLeft.setPosition(0);
-        servoRight.setPosition(0);
+        servoLeft.setDirection(Servo.Direction.REVERSE);
+        servoRight.setDirection(Servo.Direction.FORWARD);
+
+        servoLeft.setPosition(0.8);
+        servoRight.setPosition(0.8);
+        servoMark.setPosition(0.1);
 
 
 
