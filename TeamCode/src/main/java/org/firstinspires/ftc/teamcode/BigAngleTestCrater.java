@@ -152,7 +152,7 @@ public class BigAngleTestCrater extends LinearOpMode {
 
         hookEncoder(3, -.81, 5);
 
-        sleep(2000);
+        sleep(1000);
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
@@ -160,15 +160,14 @@ public class BigAngleTestCrater extends LinearOpMode {
         latEncoderDrive(.6,  -4,  -4, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         robot.servoRight.setPosition(0);
         robot.servoLeft.setPosition(0);
-        sleep(1000);
+        sleep(500);
 
         //lateral 36"
         encoderDrive(.7, -24, -24, 5);
+        sleep(250);
+        /*
+        latEncoderDrive(.6,8.5,8.5,4);
         sleep(500);
-        latEncoderDrive(.6,9.5,9.5,4);
-        robot.servoRight.setPosition(0);
-        robot.servoLeft.setPosition(0);
-        sleep(2000);
 
         double whiteValueLeft = Math.pow(580.7 - robot.sensorColorL.red(), 4) + Math.pow(612.2 - robot.sensorColorL.green(), 4)
                 + Math.pow(554.5 - robot.sensorColorL.blue(), 4);
@@ -179,11 +178,13 @@ public class BigAngleTestCrater extends LinearOpMode {
         double yellowValueRight = Math.pow(180.1 - robot.sensorColorR.red(), 4) + Math.pow(129.8 - robot.sensorColorR.green(), 4)
                 + Math.pow(78.8 - robot.sensorColorR.blue(), 4);
 
-
-        robot.servoRight.setPosition(1);
-        robot.servoLeft.setPosition(1);
-        //if(yellowValueLeft < whiteValueLeft)
-        if(true)
+        encoderDrive(.6,-10,-10,5);
+        sleep(500);
+        encoderDrive(.6,10,10,5);
+        sleep(500);
+        */
+        /*
+        if(yellowValueLeft < whiteValueLeft)
         {
             sleep(500);
             encoderDrive(.6,-10,-10,5);
@@ -204,7 +205,7 @@ public class BigAngleTestCrater extends LinearOpMode {
             gyroDrive(-45,xyz,.3,3);
             sleep(300);
             encoderDrive(.6,-3,-3,3);
-        }
+        }*/
 
         /*telemetry.addData("degrees","0");
         telemetry.update();
@@ -223,24 +224,24 @@ public class BigAngleTestCrater extends LinearOpMode {
         gyroDrive(0,xyz,.2,5);*/
         //-135
       latEncoderDrive(.7,-24,-24,5);
-      sleep(1000);
+      sleep(500);
       gyroDrive(-45,xyz,.3,5);
       robot.servoLeft.setPosition(0);
       robot.servoRight.setPosition(0);
-      sleep(500);
-      double tdistance = 8;
+      sleep(250);
+      double tdistance = 9;
       double cdistance = sensorRange.getDistance(DistanceUnit.INCH);
       latEncoderDrive(DRIVE_SPEED,-(cdistance-tdistance),-(cdistance-tdistance),3);
-      sleep(1000);
+      sleep(500);
       gyroDrive(90,xyz,.3,3);
       sleep(500);
-      gyroDrive(135,xyz,.3,3);
+      gyroDrive(126,xyz,.3,3);
       sleep(500);
       encoderDrive(.6,-65,-65,6);
       //release servo
         robot.servoMark.setPosition(1);
         sleep(500);
-        encoderDrive(.6,70,70,6);
+        encoderDrive(.6,68,68,6);
         //maybe move this line to higher>
         robot.servoMark.setPosition(0);
     }
