@@ -21,7 +21,6 @@ public class TestHardware
 {
     /* Public OpMode members. */
     public DcMotor motorLeft   = null;
-    public DcMotor  motorRight  = null;
 
     /* Local OpMode members. */
     HardwareMap hwMap  = null;
@@ -33,17 +32,13 @@ public class TestHardware
 
         // Define and Initialize Motors
         motorLeft  = hwMap.get(DcMotor.class, "motorLeft");
-        motorRight = hwMap.get(DcMotor.class, "motorRight");
-        motorRight.setDirection(DcMotor.Direction.REVERSE);
         motorLeft.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
         motorLeft.setPower(0);
-        motorRight.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         motorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }

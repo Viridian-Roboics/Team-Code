@@ -30,44 +30,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
-import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
-import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
-import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
-import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
-import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
 /**
@@ -97,9 +63,9 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="TESTAUTO", group="Pushbot")
+@Autonomous(name="Test Servo", group="Pushbot")
 //@Disabled
-public class TestAutoRuckus extends LinearOpMode {
+public class TestServo extends LinearOpMode {
 
     /* Declare OpMode members. */
     TestRuckusHardware         robot   = new TestRuckusHardware();   // Use a Pushbot's hardware
@@ -150,6 +116,9 @@ public class TestAutoRuckus extends LinearOpMode {
         robot.motorHook.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorHook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        robot.servoRight.setPosition(0.8);
+        robot.servoLeft.setPosition(0.8);
+
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
@@ -157,40 +126,15 @@ public class TestAutoRuckus extends LinearOpMode {
                           robot.motorRight.getCurrentPosition());
         telemetry.update();
 
-        double turnAngle = turnDistance(16, 90);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        hookEncoder(3, -0.78, 5);
+        telemetry.addData("Servo Position Left", robot.servoLeft.getPosition());
+        telemetry.addData("Servo Position Right", robot.servoRight.getPosition());
 
-        sleep(500);
 
-        //positive to the left
-        //negative to the right
-
-        //negative backwards
-        //positive forwards
-        latEncoderDrive(DRIVE_SPEED, -3, -3, 5);
-
-        encoderDrive(DRIVE_SPEED, -5, -5, 5);
-        latEncoderDrive(DRIVE_SPEED, 3, 3,5);
-
-        encoderDrive(DRIVE_SPEED, -19, -19,5);
-
-        sleep(500);
-
-        robot.servoLeft.setPosition(1.0);
-        robot.servoRight.setPosition(1.0);
-
-        sleep(500);
-
-        encoderDrive(DRIVE_SPEED, -25, -25, 5);
-
-        robot.servoMark.setPosition(1.0);
-        sleep(1000);
-
-        rotationEncoderDrive(DRIVE_SPEED, -turnAngle, turnAngle, turnAngle, -turnAngle, 5);
+        // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
 
         telemetry.addData("Path", "Complete");
@@ -429,5 +373,4 @@ public class TestAutoRuckus extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
-
 }
