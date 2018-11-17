@@ -26,7 +26,7 @@ public class TestRuckusHardware
 
     ColorSensor sensorColorR = null;
     ColorSensor sensorColorL = null;
-
+    DistanceSensor sensorRange = null;
     /* Local OpMode members. */
     HardwareMap hwMap;
 
@@ -86,5 +86,6 @@ public class TestRuckusHardware
         //Sensor stuff
         sensorColorR = hwMap.get(ColorSensor.class, "sensorColorR");
         sensorColorL = hwMap.get(ColorSensor.class, "sensorColorL");
+        sensorRange = hwMap.get(DistanceSensor.class, "sensorRange");
     }
 }

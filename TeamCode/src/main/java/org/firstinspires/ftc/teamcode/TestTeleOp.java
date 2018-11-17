@@ -63,7 +63,7 @@ public class TestTeleOp extends OpMode{
 //      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         robot.motorLeft.setPower(lPower);
-        robot.motorRight.setPower(rPower);
+        //robot.motorRight.setPower(rPower);
 
 
 //      TELEMETRY

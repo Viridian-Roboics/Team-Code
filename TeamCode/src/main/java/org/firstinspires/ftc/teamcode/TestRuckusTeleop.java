@@ -93,7 +93,7 @@ public class TestRuckusTeleop extends OpMode{
         {
             rPower = 1;
         }
-        else if (lPower < -1)
+        else if (rPower < -1)
         {
             rPower = -1;
         }
@@ -116,7 +116,7 @@ public class TestRuckusTeleop extends OpMode{
             bPower = -1;
         }
 
-        BringDown hook = new BringDown();
+        //BringDown hook = new BringDown();
 
 
 //      SCALING POWERS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
