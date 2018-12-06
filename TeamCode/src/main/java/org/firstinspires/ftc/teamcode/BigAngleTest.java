@@ -94,7 +94,6 @@ public class BigAngleTest extends LinearOpMode {
     static final double COUNTS_PER_MOTOR = 1120; //for the hook motor
     static final double COUNTS_PER_INCH_HOOK = (COUNTS_PER_MOTOR*2*3.1415);
     BNO055IMU imu;
-
     @Override
     public void runOpMode() {
         String xyz = "z";
