@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="RuckusTele", group="Zippo")
+@TeleOp(name="RuckusTeleOp", group="Zippo")
 //@Disabled
 
 //THE KEY BELOW IS FOR USING IMAGE RECOGNITION -PULKIT

@@ -63,12 +63,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Bring Up", group="Pushbot")
+@Autonomous(name="Bring Down", group="Pushbot")
 //@Disabled
 public class BringDown extends LinearOpMode {
 
     /* Declare OpMode members. */
-    TestRuckusHardware         robot   = new TestRuckusHardware();   // Use a Pushbot's hardware
+    ZoHardware         robot   = new ZoHardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 288 ;    // eg: TETRIX Motor Encoder

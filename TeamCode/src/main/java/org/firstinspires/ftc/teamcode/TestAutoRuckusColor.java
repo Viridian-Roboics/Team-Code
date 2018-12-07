@@ -66,7 +66,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @Autonomous(name="TESTAUTO", group="Zippo")
-//@Disabled
+@Disabled
 public class TestAutoRuckusColor extends LinearOpMode {
 
     /* Declare OpMode members. */
