@@ -80,6 +80,10 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
      */
     private TFObjectDetector tfod;
 
+
+    public enum Orientation{
+        Left, Right
+    }
     @Override
     public void runOpMode() {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
@@ -131,12 +135,11 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
                             boolean goldRelativeLeft;
                             if (goldMineralX != -1 && silverMineral1X != -1) {
                                 if(goldMineralX < silverMineral1X){
-
+                                    goldRelativeLeft = true;
                                 }else{
-
+                                    goldRelativeLeft = false;
                                 }
-
-
+                                Orientation current = Orientation.Left;
 
                                 /*if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
