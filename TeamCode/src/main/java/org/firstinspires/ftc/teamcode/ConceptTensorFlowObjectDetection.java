@@ -110,29 +110,43 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                         telemetry.addData("# Object Detected", updatedRecognitions.size());
-                        if (updatedRecognitions.size() == 3) {
                             int goldMineralX = -1;
+                            float goldMineralConfidence = 0;
                             int silverMineral1X = -1;
-                            int silverMineral2X = -1;
+                            float silverMineralConfidence = 0;
                             for (Recognition recognition : updatedRecognitions) {
-                                if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                    goldMineralX = (int) recognition.getLeft();
-                                } else if (silverMineral1X == -1) {
-                                    silverMineral1X = (int) recognition.getLeft();
-                                } else {
-                                    silverMineral2X = (int) recognition.getLeft();
+                                String label = recognition.getLabel();
+                                float confidence = recognition.getConfidence();
+                                int location = (int) recognition.getLeft();
+                                if (label.equals(LABEL_GOLD_MINERAL)
+                                        && confidence > goldMineralConfidence) {
+                                    goldMineralX = location;
+                                    goldMineralConfidence = confidence;
+                                } else if (label.equals(LABEL_SILVER_MINERAL)
+                                        && confidence > silverMineralConfidence) {
+                                    silverMineral1X = location;
+                                    silverMineralConfidence = confidence;
                                 }
                             }
-                            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                                if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                            boolean goldRelativeLeft;
+                            if (goldMineralX != -1 && silverMineral1X != -1) {
+                                if(goldMineralX < silverMineral1X){
+
+                                }else{
+
+                                }
+
+
+
+                                /*if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Right");
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
-                                }
+                                }*/
                             }
-                        }
+
                         telemetry.update();
                     }
                 }
