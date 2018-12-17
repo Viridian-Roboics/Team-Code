@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -11,8 +12,8 @@ public class ZoDepot extends ZoDriving {
     public void runOpMode()
     {
         super.runOpMode();
-        DistanceSensor sensorRangeR = hardwareMap.get(DistanceSensor.class, "sensorRangeR");
-        DistanceSensor sensorRangeL = hardwareMap.get(DistanceSensor.class, "sensorRangeL");
+        Rev2mDistanceSensor sensorRangeR = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
+        Rev2mDistanceSensor sensorRangeL = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeL");
 
         hookEncoder(3, -.81, 5);
 
@@ -35,29 +36,30 @@ public class ZoDepot extends ZoDriving {
 
         if(goldBlockPos.equals("left"))
         {
-            gyroDrive(30, xyz, 0.3, 5);
-            encoderDrive(DRIVE_SPEED, -25, -25, 5);
-            gyroDrive(25, xyz, 0.3, 5);
+            gyroDrive(20, xyz, -0.3, 5);
+            encoderDrive(DRIVE_SPEED, -48, -48, 5);
+            gyroDrive(-45, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -20, -20, 5);
             releaseMarker();
         }
 
         else if(goldBlockPos.equals("middle"))
         {
-            encoderDrive(DRIVE_SPEED, -36, -36, 5);
+            encoderDrive(DRIVE_SPEED, -50, -50, 5);
             releaseMarker();
+            gyroDrive(-45, xyz, -0.3, 5);
+
         }
 
         else
         {
-            gyroDrive(-30, xyz, 0.3, 5);
+            gyroDrive(-30, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -40, -40, 5);
-            gyroDrive(25, xyz, 0.3, 5);
-            encoderDrive(DRIVE_SPEED, -12, -12, 5);
+            gyroDrive(10, xyz, -0.3, 5);
+            encoderDrive(DRIVE_SPEED, -45, -45, 5);
+            gyroDrive(-45, xyz, -0.3, 5);
             releaseMarker();
         }
-
-        gyroDrive(-135, xyz, 0.3, 5);
 
         //align with wall
         double tdistance = 5;
@@ -66,7 +68,9 @@ public class ZoDepot extends ZoDriving {
         sleep(250);
 
         //drive to crater
-        encoderDrive(DRIVE_SPEED, -70, -70, 5);
+        encoderDrive(DRIVE_SPEED, 70, 70, 5);
+
+        //extend arm into crater [ADD LATER WHEN WE HAVE ARM]
 
     }
 }

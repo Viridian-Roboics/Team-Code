@@ -3,11 +3,15 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorREVColorDistance;
 
 public class ZoHardware
 {
@@ -24,8 +28,8 @@ public class ZoHardware
     public Servo servoMark;
 
     // Defining color sensors
-    DistanceSensor sensorRangeR = null;
-    DistanceSensor sensorRangeL = null;
+    Rev2mDistanceSensor sensorRangeR = null;
+    Rev2mDistanceSensor sensorRangeL = null;
 
     // Define hardware map
     HardwareMap hwMap;
@@ -47,10 +51,10 @@ public class ZoHardware
         servoMark = hwMap.get(Servo.class, "servoMark");
 
         // Here we set the motor directions.
-        motorRight.setDirection(DcMotor.Direction.FORWARD);
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorFront.setDirection(DcMotor.Direction.FORWARD);
-        motorBack.setDirection(DcMotor.Direction.REVERSE);
+        motorRight.setDirection(DcMotor.Direction.REVERSE);
+        motorLeft.setDirection(DcMotor.Direction.FORWARD);
+        motorFront.setDirection(DcMotor.Direction.REVERSE);
+        motorBack.setDirection(DcMotor.Direction.FORWARD);
         motorHook.setDirection(DcMotor.Direction.FORWARD);
 
         // Here we set the servo directions.
@@ -73,7 +77,7 @@ public class ZoHardware
         motorHook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Here we initialize the sensors
-        sensorRangeR = hwMap.get(DistanceSensor.class, "sensorRangeR");
-        sensorRangeL = hwMap.get(DistanceSensor.class, "sensorRangeL");
+        sensorRangeR = hwMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
+        sensorRangeL = hwMap.get(Rev2mDistanceSensor.class, "sensorRangeL");
     }
 }
