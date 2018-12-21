@@ -25,7 +25,8 @@ public class ZoDepot extends ZoDriving {
         latEncoderDrive(.6,  -4,  -4, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         sleep(500);
         encoderDrive(DRIVE_SPEED, -5, -5, 5);
-        latEncoderDrive(0.6, 4, 4, 5);
+        latEncoderDrive(0.6, 2, 2, 5);
+
 
         String goldBlockPos = "right";
         /*
@@ -33,7 +34,8 @@ public class ZoDepot extends ZoDriving {
             "left", "middle", or "right" depending on where it determines the gold block
             is positioned.
          */
-
+        sleep(10000);
+        latEncoderDrive(0.6, 2, 2, 5);
         if(goldBlockPos.equals("left"))
         {
             gyroDrive(20, xyz, -0.3, 5);
