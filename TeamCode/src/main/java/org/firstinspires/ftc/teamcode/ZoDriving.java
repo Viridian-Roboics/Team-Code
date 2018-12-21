@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.teamcode.TensorFlow.Device;
+import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -45,6 +47,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+
+import java.io.IOException;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -76,7 +80,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 public class ZoDriving extends LinearOpMode {
 
     /* Declare OpMode members. */
-    ZoHardware         robot   = new ZoHardware();   // Use a Pushbot's hardware
+    ZoHardware         robot   = new ZoHardware();
     private ElapsedTime     runtime = new ElapsedTime();
     String xyz = "z";
 
@@ -92,7 +96,7 @@ public class ZoDriving extends LinearOpMode {
     static final double COUNTS_PER_INCH_HOOK = (COUNTS_PER_MOTOR*2*3.1415);
 
     BNO055IMU imu;
-
+    TensorFlow tf;
     @Override
     public void runOpMode() {
         /*
@@ -111,10 +115,6 @@ public class ZoDriving extends LinearOpMode {
         imu.initialize(parameters);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-
-        // Send telemetry message to signify robot waiting;
-        /*telemetry.addData("Status", "Resetting Encoders");    //
-        telemetry.update();*/
 
         //side motors
         robot.motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -135,16 +135,13 @@ public class ZoDriving extends LinearOpMode {
         robot.motorHook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-        // Send telemetry message to indicate successful Encoder reset
-        /*telemetry.addData("Path0",  "Starting at %7d :%7d",
-                robot.motorLeft.getCurrentPosition(),
-                robot.motorRight.getCurrentPosition());
-        telemetry.update();*/
 
         // Wait for the game to start (driver presses PLAY)
         robot.servoMark.setPosition(0);
+        tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
         waitForStart();
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+        tf.start();
 
     }
 
@@ -391,5 +388,6 @@ public class ZoDriving extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, 5, 5, 5);
         robot.servoMark.setPosition(0);
     }
+
 
 }

@@ -84,6 +84,9 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
     public enum Orientation{
         Left, Right
     }
+    public enum MineralLocation{
+        Left,Center,Right
+    }
     @Override
     public void runOpMode() {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
@@ -133,14 +136,28 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
                                 }
                             }
                             boolean goldRelativeLeft;
+                            MineralLocation location;
                             if (goldMineralX != -1 && silverMineral1X != -1) {
                                 if(goldMineralX < silverMineral1X){
                                     goldRelativeLeft = true;
                                 }else{
                                     goldRelativeLeft = false;
                                 }
+                                //this is a temporary variable will be a field of the TensorFlow object
                                 Orientation current = Orientation.Left;
-
+                                if(current == Orientation.Left){
+                                    if(goldRelativeLeft){
+                                        location = MineralLocation.Left;
+                                    }else{
+                                        location = MineralLocation.Center;
+                                    }
+                                }else{
+                                    if(goldRelativeLeft){
+                                        location = MineralLocation.Center;
+                                    }else{
+                                        location = MineralLocation.Right;
+                                    }
+                                }
                                 /*if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
