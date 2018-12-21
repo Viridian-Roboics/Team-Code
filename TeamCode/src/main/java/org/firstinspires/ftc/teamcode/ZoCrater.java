@@ -11,8 +11,6 @@ public class ZoCrater extends ZoDriving {
     public void runOpMode()
     {
         super.runOpMode();
-        DistanceSensor sensorRangeR = hardwareMap.get(DistanceSensor.class, "sensorRangeR");
-        DistanceSensor sensorRangeL = hardwareMap.get(DistanceSensor.class, "sensorRangeL");
 
         hookEncoder(3, -.81, 5);
 

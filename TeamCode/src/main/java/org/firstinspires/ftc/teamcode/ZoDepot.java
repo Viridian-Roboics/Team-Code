@@ -3,7 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-
+import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
+import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ZoDriving;
 
@@ -12,8 +13,8 @@ public class ZoDepot extends ZoDriving {
     public void runOpMode()
     {
         super.runOpMode();
-        Rev2mDistanceSensor sensorRangeR = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
-        Rev2mDistanceSensor sensorRangeL = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeL");
+        //stat tensorflow
+        //tf.start();
 
         hookEncoder(3, -.81, 5);
 
@@ -27,16 +28,12 @@ public class ZoDepot extends ZoDriving {
         encoderDrive(DRIVE_SPEED, -5, -5, 5);
         latEncoderDrive(0.6, 2, 2, 5);
 
-
-        String goldBlockPos = "right";
-        /*
-            change this later when sampling works. Sampling should return either String
-            "left", "middle", or "right" depending on where it determines the gold block
-            is positioned.
-         */
-        sleep(10000);
+        //uncomment line after problem is resolved
+        //MineralLocation goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
+        MineralLocation goldMineralLocation = MineralLocation.Left;
+        sleep(500);
         latEncoderDrive(0.6, 2, 2, 5);
-        if(goldBlockPos.equals("left"))
+        if(goldMineralLocation == MineralLocation.Left)
         {
             gyroDrive(20, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -48, -48, 5);
@@ -45,7 +42,7 @@ public class ZoDepot extends ZoDriving {
             releaseMarker();
         }
 
-        else if(goldBlockPos.equals("middle"))
+        else if(goldMineralLocation == MineralLocation.Center)
         {
             encoderDrive(DRIVE_SPEED, -50, -50, 5);
             releaseMarker();

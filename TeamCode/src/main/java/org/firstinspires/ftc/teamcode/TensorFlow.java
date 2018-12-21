@@ -57,7 +57,9 @@ public class TensorFlow {
         }
     }
     public void shutdown(){
-        tfod.shutdown();
+        if (tfod != null) {
+            tfod.shutdown();
+        }
     }
     public MineralLocation getMineralLocation(RobotOrientation orientation){
         //the location of the mineral, defaults to center if TFOD fails or objects or not found

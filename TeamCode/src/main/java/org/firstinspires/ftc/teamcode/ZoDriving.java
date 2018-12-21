@@ -30,9 +30,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.teamcode.TensorFlow.Device;
-import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -94,7 +94,8 @@ public class ZoDriving extends LinearOpMode {
     static final double     TURN_SPEED              = 0.5;
     static final double COUNTS_PER_MOTOR = 1120; //for the hook motor
     static final double COUNTS_PER_INCH_HOOK = (COUNTS_PER_MOTOR*2*3.1415);
-
+    Rev2mDistanceSensor sensorRangeR;
+    Rev2mDistanceSensor sensorRangeL;
     BNO055IMU imu;
     TensorFlow tf;
     @Override
@@ -114,8 +115,10 @@ public class ZoDriving extends LinearOpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-
+        //int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        //init distance sensors
+        Rev2mDistanceSensor sensorRangeR = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
+        Rev2mDistanceSensor sensorRangeL = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeL");
         //side motors
         robot.motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -141,7 +144,7 @@ public class ZoDriving extends LinearOpMode {
         tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
         waitForStart();
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
-        tf.start();
+        //tf.start(); //moved to start of program
 
     }
 
