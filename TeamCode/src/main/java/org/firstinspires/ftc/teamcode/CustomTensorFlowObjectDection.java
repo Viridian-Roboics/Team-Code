@@ -10,7 +10,6 @@ public class CustomTensorFlowObjectDection extends ZoDriving {
         super.runOpMode();
         tf.start();
         while(opModeIsActive()){
-
             telemetry.addData("value",tf.getMineralLocation(RobotOrientation.Left));
             telemetry.update();
         }
