@@ -13,9 +13,8 @@ public class ZoDepot extends ZoDriving {
     public void runOpMode()
     {
         super.runOpMode();
-        //stat tensorflow
-        //tf.start();
-
+        //startt tensorflow
+        tf.start();
         hookEncoder(3, -.81, 5);
 
         sleep(1000);
@@ -29,8 +28,8 @@ public class ZoDepot extends ZoDriving {
         latEncoderDrive(0.6, 2, 2, 5);
 
         //uncomment line after problem is resolved
-        //MineralLocation goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
-        MineralLocation goldMineralLocation = MineralLocation.Left;
+        MineralLocation goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
+        //MineralLocation goldMineralLocation = MineralLocation.Left;
         sleep(500);
         latEncoderDrive(0.6, 2, 2, 5);
         if(goldMineralLocation == MineralLocation.Left)
@@ -71,5 +70,7 @@ public class ZoDepot extends ZoDriving {
 
         //extend arm into crater [ADD LATER WHEN WE HAVE ARM]
 
+        //shutdown tensorflow (necessary)
+        tf.shutdown();
     }
 }
