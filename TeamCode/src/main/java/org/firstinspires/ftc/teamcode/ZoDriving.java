@@ -396,7 +396,7 @@ public class ZoDriving extends LinearOpMode {
         if(direction){
             hookEncoder(3, distance, 5);
         }else{
-            hookEncoder(3, distance, 5);
+            hookEncoder(3, -distance, 5);
         }
     }
 
