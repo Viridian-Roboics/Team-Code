@@ -157,6 +157,8 @@ public class ZoTeleOp extends OpMode{
         robot.motorFront.setPower(fPower);
         robot.motorBack.setPower(bPower);
         robot.motorHook.setPower(hPower);
+        robot.motorArmExt.setPower(aPowerExt);
+        robot.motorArmTilt.setPower(aPowerTIlt);
 
 
 //      TELEMETRY
@@ -166,7 +168,8 @@ public class ZoTeleOp extends OpMode{
         telemetry.addData("Back Motor Power", gamepad1.left_stick_x);
         telemetry.addData("Hook Motor Power", gamepad2.left_stick_y);
         telemetry.addData("Distance", robot.sensorRangeL.getDistance(DistanceUnit.INCH));
-
+        telemetry.addData("Arm Tilt Motor Power", aPowerTIlt);
+        telemetry.addData("Arm Ext Motor Power", aPowerExt);
     }
 
 //--------------------------------- FUNCTIONS ----------------------------------------------------
