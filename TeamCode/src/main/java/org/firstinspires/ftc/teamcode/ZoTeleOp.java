@@ -22,7 +22,8 @@ public class ZoTeleOp extends OpMode{
     private double fPower = 0; //front power
     private double bPower = 0; //back power
     private double hPower = 0; //hook power
-
+    private double aPowerExt = 0; //arm extension power
+    private double aPowerTIlt = 0; //arm tilt power
 
     @Override
     public void init() {
@@ -71,6 +72,33 @@ public class ZoTeleOp extends OpMode{
             bPower = -1;
         }
 
+        if(gamepad1.left_bumper)
+        {
+            aPowerTIlt = 1;
+        }
+
+        else if (gamepad1.right_bumper)
+        {
+            aPowerTIlt = -1;
+        }
+        else
+        {
+            aPowerTIlt =0;
+        }
+
+        if(gamepad1.left_trigger > 0)
+        {
+            aPowerExt = 1;
+        }
+
+        else if (gamepad1.right_trigger > 0)
+        {
+            aPowerExt = -1;
+        }
+        else
+        {
+            aPowerExt =0;
+        }
 
 
 //      CONSTRAIN MOTOR POWERS: -1 to 1 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -114,7 +142,7 @@ public class ZoTeleOp extends OpMode{
 
 
 //      SCALING POWERS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        if(gamepad1.right_bumper)
+        if(gamepad1.y)
         {
             lPower *= 0.4;
             rPower *= 0.4;

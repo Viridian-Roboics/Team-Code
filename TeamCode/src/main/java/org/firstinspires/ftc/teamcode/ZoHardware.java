@@ -23,6 +23,8 @@ public class ZoHardware
     public DcMotor motorBack;
     // The motor to raise and lower the hook
     public DcMotor motorHook;
+    public DcMotor motorArmExt;
+    public DcMotor motorArmTilt;
 
     // The servo to release the marker
     public Servo servoMark;
@@ -46,7 +48,8 @@ public class ZoHardware
         motorBack  = hwMap.get(DcMotor.class, "motorBack");
         motorFront  = hwMap.get(DcMotor.class, "motorFront");
         motorHook  = hwMap.get(DcMotor.class, "motorHook");
-
+        motorArmExt  = hwMap.get(DcMotor.class, "motorArmExt");
+        motorArmTilt  = hwMap.get(DcMotor.class, "motorArmTilt");
         // Here we name the servos.
         servoMark = hwMap.get(Servo.class, "servoMark");
 
@@ -56,6 +59,8 @@ public class ZoHardware
         motorFront.setDirection(DcMotor.Direction.REVERSE);
         motorBack.setDirection(DcMotor.Direction.FORWARD);
         motorHook.setDirection(DcMotor.Direction.FORWARD);
+        motorArmExt.setDirection(DcMotor.Direction.FORWARD);
+        motorArmTilt.setDirection(DcMotor.Direction.FORWARD);
 
         // Here we set the servo directions.
 
@@ -65,7 +70,8 @@ public class ZoHardware
         motorFront.setPower(0);
         motorBack.setPower(0);
         motorHook.setPower(0);
-
+        motorArmExt.setPower(0);
+        motorArmTilt.setPower(0);
         // Here we initialize the servos.
         servoMark.setPosition(0.0);
 
@@ -75,6 +81,8 @@ public class ZoHardware
         motorFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorHook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorArmExt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorArmTilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Here we initialize the sensors
         sensorRangeR = hwMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
