@@ -12,7 +12,7 @@ public class ZoCrater extends ZoDriving {
     {
         super.runOpMode();
 
-        hookEncoder(3, -.81, 5);
+        MoveHookUp(false);
 
         sleep(1000);
 

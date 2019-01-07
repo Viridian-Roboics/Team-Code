@@ -10,6 +10,6 @@ public class ZoBringUp extends ZoDriving {
     public void runOpMode()
     {
         super.runOpMode();
-        hookEncoder(3, .81, 5);
+        MoveHookUp(true);
     }
 }
