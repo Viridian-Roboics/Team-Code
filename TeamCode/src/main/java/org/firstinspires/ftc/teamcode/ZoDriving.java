@@ -92,7 +92,7 @@ public class ZoDriving extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 1;
     static final double     TURN_SPEED              = 0.5;
-    static final double COUNTS_PER_MOTOR = 1120; //for the hook motor
+    static final double COUNTS_PER_MOTOR = 1440; //for the hook motor // 1440 //1120
     static final double COUNTS_PER_INCH_HOOK = (COUNTS_PER_MOTOR*2*3.1415);
     Rev2mDistanceSensor sensorRangeR;
     Rev2mDistanceSensor sensorRangeL;
@@ -392,11 +392,11 @@ public class ZoDriving extends LinearOpMode {
         robot.servoMark.setPosition(0);
     }
     public void MoveHookUp(boolean direction){
-        double distance = 1.6;
+        double distance = .81;
         if(direction){
-            hookEncoder(3, distance, 5);
+            hookEncoder(3, distance, 10);
         }else{
-            hookEncoder(3, -distance, 5);
+            hookEncoder(3, -distance, 10);
         }
     }
 

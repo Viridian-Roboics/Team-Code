@@ -54,10 +54,10 @@ public class ZoHardware
         servoMark = hwMap.get(Servo.class, "servoMark");
 
         // Here we set the motor directions.
-        motorRight.setDirection(DcMotor.Direction.REVERSE);
-        motorLeft.setDirection(DcMotor.Direction.FORWARD);
-        motorFront.setDirection(DcMotor.Direction.REVERSE);
-        motorBack.setDirection(DcMotor.Direction.FORWARD);
+        motorRight.setDirection(DcMotor.Direction.FORWARD);
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorFront.setDirection(DcMotor.Direction.FORWARD);
+        motorBack.setDirection(DcMotor.Direction.REVERSE);
         motorHook.setDirection(DcMotor.Direction.FORWARD);
         motorArmExt.setDirection(DcMotor.Direction.FORWARD);
         motorArmTilt.setDirection(DcMotor.Direction.FORWARD);

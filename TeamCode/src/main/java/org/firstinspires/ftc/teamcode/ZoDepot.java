@@ -15,7 +15,7 @@ public class ZoDepot extends ZoDriving {
         super.runOpMode();
         //startt tensorflow
         tf.start();
-        MoveHookUp(false);
+        //MoveHookUp(false);
 
         sleep(1000);
 
