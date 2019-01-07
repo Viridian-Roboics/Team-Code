@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-
+//TensorFlow Object class
 public class TensorFlow {
     private boolean error;
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
