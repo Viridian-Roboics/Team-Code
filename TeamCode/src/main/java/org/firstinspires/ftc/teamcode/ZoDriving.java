@@ -391,6 +391,14 @@ public class ZoDriving extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, 5, 5, 5);
         robot.servoMark.setPosition(0);
     }
+    public void MoveHookUp(boolean direction){
+        double distance = 1.6;
+        if(direction){
+            hookEncoder(3, distance, 5);
+        }else{
+            hookEncoder(3, -distance, 5);
+        }
+    }
 
 
 }
