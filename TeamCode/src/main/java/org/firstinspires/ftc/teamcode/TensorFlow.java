@@ -71,7 +71,7 @@ public class TensorFlow {
             //looks at each detected object, obtains "the most" gold and silver mineral
             int goldMineralX = -1;
             float goldMineralConfidence = 0;
-            int silverMineral1X = -1;
+            int silverMineralX = -1;
             float silverMineralConfidence = 0;
             for (Recognition recognition : updatedRecognitions) {
                 String label = recognition.getLabel();
@@ -83,15 +83,15 @@ public class TensorFlow {
                     goldMineralConfidence = confidence;
                 } else if (label.equals(LABEL_SILVER_MINERAL)
                         && confidence > silverMineralConfidence) {
-                    silverMineral1X = location;
+                    silverMineralX = location;
                     silverMineralConfidence = confidence;
                 }
             }
             //using the two gold and silver object x locations,
             //obtains whether the gold mineral is on the relative left or the right
             boolean goldRelativeLeft;
-            if (goldMineralX != -1 && silverMineral1X != -1) {
-                if (goldMineralX < silverMineral1X) {
+            if (goldMineralX != -1 && silverMineralX != -1) {
+                if (goldMineralX < silverMineralX) {
                     goldRelativeLeft = true;
                 } else {
                     goldRelativeLeft = false;
@@ -112,6 +112,13 @@ public class TensorFlow {
                         absoluteLocation = MineralLocation.Right;
                     }
                    // telemetry.addData("orientation","fail");
+                }
+            } //sees at least one silver (so not a reading from the wrong position, but no gold seen)
+            else if(silverMineralX != -1 && goldMineralX == -1){
+                if(orientation == RobotOrientation.Left){
+                    absoluteLocation = MineralLocation.Right;
+                }else if(orientation == RobotOrientation.Right){
+                    absoluteLocation = MineralLocation.Left;
                 }
             }
         }
