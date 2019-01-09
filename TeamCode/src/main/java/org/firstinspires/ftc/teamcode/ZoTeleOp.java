@@ -40,8 +40,8 @@ public class ZoTeleOp extends OpMode{
 //      MAIN DRIVING CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         lPower = gamepad1.right_stick_y;
         rPower = gamepad1.right_stick_y;
-        fPower = gamepad1.right_stick_x;
-        bPower = gamepad1.right_stick_x;
+        fPower = -gamepad1.right_stick_x;
+        bPower = -gamepad1.right_stick_x;
 
         if(gamepad1.dpad_up)
         {
@@ -59,15 +59,15 @@ public class ZoTeleOp extends OpMode{
         //rotate
         if(gamepad1.left_stick_x > 0)
         {
-            lPower = 1;
-            rPower = -1;
+            lPower = -1; //lpower used to be 1
+            rPower = 1; //rpower used to be -1
             fPower = -1;
             bPower = 1;
         }
         else if(gamepad1.left_stick_x < 0)
         {
-            lPower = -1;
-            rPower = 1;
+            lPower = 1; //lpower used to be -1
+            rPower = -1; //used to be 1
             fPower = 1;
             bPower = -1;
         }
@@ -152,10 +152,10 @@ public class ZoTeleOp extends OpMode{
 
 //      SETTING POWERS AND POSITIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-        robot.motorLeft.setPower(lPower);
-        robot.motorRight.setPower(rPower);
-        robot.motorFront.setPower(fPower);
-        robot.motorBack.setPower(bPower);
+        robot.motorLeft.setPower(fPower);
+        robot.motorRight.setPower(bPower);
+        robot.motorFront.setPower(rPower);
+        robot.motorBack.setPower(lPower);
         robot.motorHook.setPower(hPower);
         robot.motorArmExt.setPower(aPowerExt);
         robot.motorArmTilt.setPower(aPowerTIlt);
