@@ -30,7 +30,7 @@ public class TensorFlow {
     private Telemetry telemetry;
 
     public enum RobotOrientation{
-        Left, Right
+        Left, Right, Center
     }
     public enum MineralLocation{
         Left,Center,Right
@@ -68,59 +68,84 @@ public class TensorFlow {
         //otherwise, continue with detection
         if(!error) {
             List<Recognition> updatedRecognitions = tfod.getRecognitions();
-            //looks at each detected object, obtains "the most" gold and silver mineral
             int goldMineralX = -1;
-            float goldMineralConfidence = 0;
-            int silverMineralX = -1;
-            float silverMineralConfidence = 0;
-            for (Recognition recognition : updatedRecognitions) {
-                String label = recognition.getLabel();
-                float confidence = recognition.getConfidence();
-                int location = (int) recognition.getLeft();
-                if (label.equals(LABEL_GOLD_MINERAL)
-                        && confidence > goldMineralConfidence) {
-                    goldMineralX = location;
-                    goldMineralConfidence = confidence;
-                } else if (label.equals(LABEL_SILVER_MINERAL)
-                        && confidence > silverMineralConfidence) {
-                    silverMineralX = location;
-                    silverMineralConfidence = confidence;
+            int silverMineral1X = -1;
+            int silverMineral2X = -1;
+            //Three Mineral Algorithm
+            if(orientation == RobotOrientation.Center){
+                for (Recognition recognition : updatedRecognitions) {
+                    if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                        goldMineralX = (int) recognition.getLeft();
+                    } else if (silverMineral1X == -1) {
+                        silverMineral1X = (int) recognition.getLeft();
+                    } else {
+                        silverMineral2X = (int) recognition.getLeft();
+                    }
+                }
+                if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+                    if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                        return MineralLocation.Left;
+                    } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                        return MineralLocation.Right;
+                    } else {
+                        return MineralLocation.Center;
+                    }
                 }
             }
-            //using the two gold and silver object x locations,
-            //obtains whether the gold mineral is on the relative left or the right
-            boolean goldRelativeLeft;
-            if (goldMineralX != -1 && silverMineralX != -1) {
-                if (goldMineralX < silverMineralX) {
-                    goldRelativeLeft = true;
-                } else {
-                    goldRelativeLeft = false;
-                }
-               // telemetry.addData("Relative", goldRelativeLeft);
-                //translates the relative location to an absolute location based off the orientation
-                if (orientation == RobotOrientation.Left) {
-                    if (goldRelativeLeft) {
-                        absoluteLocation = MineralLocation.Left;
-                    } else {
-                        absoluteLocation = MineralLocation.Center;
+            else{//Two Mineral Algorithm
+                //looks at each detected object, obtains "the most" gold and silver mineral
+                float goldMineralConfidence = 0;
+                float silverMineralConfidence = 0;
+                for (Recognition recognition : updatedRecognitions) {
+                    String label = recognition.getLabel();
+                    float confidence = recognition.getConfidence();
+                    int location = (int) recognition.getLeft();
+                    if (label.equals(LABEL_GOLD_MINERAL)
+                            && confidence > goldMineralConfidence) {
+                        goldMineralX = location;
+                        goldMineralConfidence = confidence;
+                    } else if (label.equals(LABEL_SILVER_MINERAL)
+                            && confidence > silverMineralConfidence) {
+                        silverMineral1X = location;
+                        silverMineralConfidence = confidence;
                     }
-                    //telemetry.addData("orientation",absoluteLocation);
-                } else {
-                    if (goldRelativeLeft) {
-                        absoluteLocation = MineralLocation.Center;
+                }
+                //using the two gold and silver object x locations,
+                //obtains whether the gold mineral is on the relative left or the right
+                boolean goldRelativeLeft;
+                if (goldMineralX != -1 && silverMineral1X != -1) {
+                    if (goldMineralX < silverMineral1X) {
+                        goldRelativeLeft = true;
                     } else {
+                        goldRelativeLeft = false;
+                    }
+                    // telemetry.addData("Relative", goldRelativeLeft);
+                    //translates the relative location to an absolute location based off the orientation
+                    if (orientation == RobotOrientation.Left) {
+                        if (goldRelativeLeft) {
+                            absoluteLocation = MineralLocation.Left;
+                        } else {
+                            absoluteLocation = MineralLocation.Center;
+                        }
+                        //telemetry.addData("orientation",absoluteLocation);
+                    } else {
+                        if (goldRelativeLeft) {
+                            absoluteLocation = MineralLocation.Center;
+                        } else {
+                            absoluteLocation = MineralLocation.Right;
+                        }
+                        // telemetry.addData("orientation","fail");
+                    }
+                } //sees at least one silver (so not a reading from the wrong position, but no gold seen)
+                else if(silverMineral1X != -1 && goldMineralX == -1){
+                    if(orientation == RobotOrientation.Left){
                         absoluteLocation = MineralLocation.Right;
+                    }else if(orientation == RobotOrientation.Right){
+                        absoluteLocation = MineralLocation.Left;
                     }
-                   // telemetry.addData("orientation","fail");
-                }
-            } //sees at least one silver (so not a reading from the wrong position, but no gold seen)
-            else if(silverMineralX != -1 && goldMineralX == -1){
-                if(orientation == RobotOrientation.Left){
-                    absoluteLocation = MineralLocation.Right;
-                }else if(orientation == RobotOrientation.Right){
-                    absoluteLocation = MineralLocation.Left;
                 }
             }
+
         }
         return absoluteLocation;
     }
