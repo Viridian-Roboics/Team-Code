@@ -167,9 +167,10 @@ public class ZoTeleOp extends OpMode{
         telemetry.addData("Front Motor Power", gamepad1.left_stick_x);
         telemetry.addData("Back Motor Power", gamepad1.left_stick_x);
         telemetry.addData("Hook Motor Power", gamepad2.left_stick_y);
-        telemetry.addData("Distance", robot.sensorRangeL.getDistance(DistanceUnit.INCH));
+        telemetry.addData("Left Distance", robot.sensorRangeL.getDistance(DistanceUnit.INCH));
         telemetry.addData("Arm Tilt Motor Power", aPowerTIlt);
         telemetry.addData("Arm Ext Motor Power", aPowerExt);
+        telemetry.addData("Right Distance", robot.sensorRangeR.getDistance(DistanceUnit.INCH));
     }
 
 //--------------------------------- FUNCTIONS ----------------------------------------------------
