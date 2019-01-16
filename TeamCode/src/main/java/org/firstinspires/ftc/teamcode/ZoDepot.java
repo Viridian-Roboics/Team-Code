@@ -15,9 +15,10 @@ public class ZoDepot extends ZoDriving {
         super.runOpMode();
         //startt tensorflow
         tf.start();
+        sleep(500);
+        MineralLocation goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
         MoveHookUp(false);
-
-        sleep(1000);
+        sleep(500);
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
@@ -28,7 +29,6 @@ public class ZoDepot extends ZoDriving {
         latEncoderDrive(0.6, 2, 2, 5);
 
         //uncomment line after problem is resolved
-        MineralLocation goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
         //MineralLocation goldMineralLocation = MineralLocation.Left;
         sleep(500);
         latEncoderDrive(0.6, 2, 2, 5);

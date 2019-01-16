@@ -140,7 +140,7 @@ public class ZoDriving extends LinearOpMode {
 
 
         // Wait for the game to start (driver presses PLAY)
-        robot.servoMark.setPosition(0);
+        robot.servoMark.setPosition(.3);
         tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
         waitForStart();
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
@@ -389,7 +389,7 @@ public class ZoDriving extends LinearOpMode {
         robot.servoMark.setPosition(1);
         sleep(500);
         encoderDrive(DRIVE_SPEED, 5, 5, 5);
-        robot.servoMark.setPosition(0);
+        robot.servoMark.setPosition(.3);
     }
     public void MoveHookUp(boolean direction){
         double distance = .81;
