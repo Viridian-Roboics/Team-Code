@@ -4,6 +4,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -28,6 +29,7 @@ public class ZoHardware
 
     // The servo to release the marker
     public Servo servoMark;
+    public CRServo servoBox;
 
     // Defining color sensors
     Rev2mDistanceSensor sensorRangeR = null;
@@ -52,6 +54,7 @@ public class ZoHardware
         motorArmTilt  = hwMap.get(DcMotor.class, "motorArmTilt");
         // Here we name the servos.
         servoMark = hwMap.get(Servo.class, "servoMark");
+        servoBox = hwMap.get(CRServo.class, "servoBox");
 
         // Here we set the motor directions.
         motorRight.setDirection(DcMotor.Direction.FORWARD);
@@ -74,6 +77,7 @@ public class ZoHardware
         motorArmTilt.setPower(0);
         // Here we initialize the servos.
         servoMark.setPosition(0.0);
+        servoBox.setPower(0.0);
 
         // Here we set all motors to run with encoders.
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
