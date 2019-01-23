@@ -39,10 +39,31 @@ public class ZoTeleOp extends OpMode{
     public void loop() {
 
 //      MAIN DRIVING CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        lPower = gamepad1.right_stick_y;
-        rPower = gamepad1.right_stick_y;
-        fPower = -gamepad1.right_stick_x;
-        bPower = -gamepad1.right_stick_x;
+//        lPower = gamepad1.right_stick_y;
+//        rPower = gamepad1.right_stick_y;
+//        fPower = -gamepad1.right_stick_x;
+//        bPower = -gamepad1.right_stick_x;
+        if (gamepad1.right_stick_y != 0)
+        {
+            lPower = gamepad1.right_stick_y;
+            rPower = gamepad1.right_stick_y;
+        }
+        if (gamepad2.right_stick_y != 0)
+        {
+            lPower = gamepad2.right_stick_y;
+            rPower = gamepad2.right_stick_y;
+        }
+        if (gamepad1.right_stick_x != 0)
+        {
+            fPower = gamepad1.right_stick_x;
+            bPower = gamepad1.right_stick_x;
+        }
+        if (gamepad2.right_stick_x != 0)
+        {
+            fPower = gamepad2.right_stick_x;
+            bPower = gamepad2.right_stick_x;
+        }
+
 
         if(gamepad1.dpad_up || gamepad2.dpad_up)
         {
@@ -58,14 +79,14 @@ public class ZoTeleOp extends OpMode{
         }
 
         //rotate
-        if(gamepad1.left_stick_x > 0 || gamepad1.left_stick_x > 0)
+        if(gamepad1.left_stick_x > 0 || gamepad2.left_stick_x > 0)
         {
             lPower = -1; //lpower used to be 1
             rPower = 1; //rpower used to be -1
             fPower = -1;
             bPower = 1;
         }
-        else if(gamepad1.left_stick_x < 0 || gamepad1.left_stick_x < 0)
+        else if(gamepad1.left_stick_x < 0 || gamepad2.left_stick_x < 0)
         {
             lPower = 1; //lpower used to be -1
             rPower = -1; //used to be 1
@@ -153,9 +174,13 @@ public class ZoTeleOp extends OpMode{
         {
             boxPower = -1;
         }
-        else if((gamepad1.a && boxPower < 1) || (gamepad2.a && boxPower < 1))
+        else if((gamepad1.a && boxPower < 0) || (gamepad2.a && boxPower < 0))
         {
             boxPower = 1;
+        }
+        if((gamepad1.b && boxPower != 0) || (gamepad2.b && boxPower != 0))
+        {
+            boxPower = 0;
         }
 //      SETTING POWERS AND POSITIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
