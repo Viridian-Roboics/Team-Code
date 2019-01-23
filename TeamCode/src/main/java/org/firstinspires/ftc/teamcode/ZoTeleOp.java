@@ -149,11 +149,11 @@ public class ZoTeleOp extends OpMode{
             fPower *= 0.4;
             bPower *= 0.4;
         }
-        if(gamepad1.a ||gamepad2.a)
+        if((gamepad1.a && boxPower >= 0) ||(gamepad2.a && boxPower >= 0))
         {
             boxPower = -1;
         }
-        else if(gamepad1.b || gamepad2.b)
+        else if((gamepad1.a && boxPower < 1) || (gamepad2.a && boxPower < 1))
         {
             boxPower = 1;
         }
