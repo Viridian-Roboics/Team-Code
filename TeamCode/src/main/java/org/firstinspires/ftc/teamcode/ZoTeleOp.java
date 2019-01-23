@@ -143,18 +143,17 @@ public class ZoTeleOp extends OpMode{
 
 
 //      SCALING POWERS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        if(gamepad1.y || gamepad2.y)
-        {
+        if(gamepad1.y || gamepad2.y) {
             lPower *= 0.4;
             rPower *= 0.4;
             fPower *= 0.4;
             bPower *= 0.4;
         }
-        if((gamepad1.a && boxPower >= 0) ||(gamepad2.a && boxPower >= 0))
+        if(gamepad1.a ||gamepad2.a)
         {
             boxPower = -1;
         }
-        else if((gamepad1.a && boxPower < 1) || (gamepad2.a && boxPower < 1))
+        else if(gamepad1.b || gamepad2.b)
         {
             boxPower = 1;
         }
