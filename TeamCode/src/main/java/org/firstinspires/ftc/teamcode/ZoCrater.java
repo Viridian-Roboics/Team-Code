@@ -11,48 +11,52 @@ public class ZoCrater extends ZoDriving {
     public void runOpMode()
     {
         super.runOpMode();
-
+        //startt tensorflow
+        tf.start();
+        sleep(500);
+        TensorFlow.MineralLocation goldMineralLocation = tf.getMineralLocation(TensorFlow.RobotOrientation.Left);
         MoveHookUp(false);
-
-        sleep(1000);
+        sleep(500);
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
         latEncoderDrive(.6,  -4,  -4, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         sleep(500);
-        encoderDrive(DRIVE_SPEED, -15, -15, 5);
-        String goldBlockPos = "right";
+        encoderDrive(DRIVE_SPEED, -5, -5, 5);
+        latEncoderDrive(0.6, 2, 2, 5);
 
-        if (goldBlockPos.equals("left"))
+        sleep(500);
+        latEncoderDrive(0.6, 2, 2, 5);
+        if(goldMineralLocation == TensorFlow.MineralLocation.Left)
         {
-            gyroDrive(30, xyz, 0.3, 5);
-            encoderDrive(DRIVE_SPEED, -20, -20, 5);
-            gyroDrive(135, xyz, 0.3, 5);
-            double tdistance = 5;
-            double cdistance = sensorRangeL.getDistance(DistanceUnit.INCH);
-            latEncoderDrive(DRIVE_SPEED,-(cdistance-tdistance),-(cdistance-tdistance),3);
-            encoderDrive(DRIVE_SPEED, -70, -70, 5);
+            gyroDrive(20, xyz, -0.3, 5); //turn towards mineral
+            encoderDrive(DRIVE_SPEED, -50, -50, 5); //drive through mineral to wall
+            gyroDrive(135, xyz, 0.3, 5); //turn toward depot
+            encoderDrive(DRIVE_SPEED, 60, 60, 5); //drive to depot
+            releaseMarker();
         }
 
-        else if(goldBlockPos.equals("middle"))
+        else if(goldMineralLocation == TensorFlow.MineralLocation.Center)
         {
-            encoderDrive(DRIVE_SPEED, -20, -20, 5);
-            encoderDrive(DRIVE_SPEED, 12, 12, 5);
-            gyroDrive(90, xyz, 0.3, 5);
-            encoderDrive(DRIVE_SPEED, -36, -36, 5);
-            gyroDrive(135, xyz, 0.3, 5);
+            encoderDrive(DRIVE_SPEED, -25, -25, 5); //forward and hit mineral
+            encoderDrive(DRIVE_SPEED, 15, 15, 5); //backwards back to starting position\
+            gyroDrive(20, xyz, -0.3, 5); //turn to wall
+            encoderDrive(DRIVE_SPEED, -50, -50, 5); //drive to wall
+            gyroDrive(135, xyz, 0.3, 5); //turn towards depot
+            encoderDrive(DRIVE_SPEED, 60, 60, 5); //drive to depot
+            releaseMarker();
         }
+
         else
         {
-            gyroDrive(-35, xyz, -0.3, 5);
-            encoderDrive(DRIVE_SPEED, -27, -27, 5);
-            encoderDrive(DRIVE_SPEED, 12, 12, 5);
-            sleep(10000);
-            gyroDrive(90, xyz, 0.3, 5);
-            encoderDrive(DRIVE_SPEED, -40, -40, 5);
+            gyroDrive(-30, xyz, -0.3, 5); //turn to mineral
+            encoderDrive(DRIVE_SPEED, -40, -40, 5); //hit mineral
+            gyroDrive(10, xyz, -0.3, 5); //
+            encoderDrive(DRIVE_SPEED, -45, -45, 5);
+            gyroDrive(-45, xyz, -0.3, 5);
+            releaseMarker();
         }
-
         gyroDrive(135, xyz, 0.3, 5);
         double tdistance = 5;
         double cdistance = sensorRangeL.getDistance(DistanceUnit.INCH);
