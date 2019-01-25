@@ -62,6 +62,8 @@ import java.io.IOException;
  *  power command moves them forwards, and causes the encoders to count UP.
  *
  *   The desired path in this example is:
+ *
+ *
  *   - Drive forward for 48 inches
  *   - Spin right for 12 Inches
  *   - Drive Backwards for 24 inches
@@ -119,6 +121,8 @@ public class ZoDriving extends LinearOpMode {
         //init distance sensors
         Rev2mDistanceSensor sensorRangeR = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
         Rev2mDistanceSensor sensorRangeL = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeL");
+        sensorRangeL.initialize();
+        sensorRangeR.initialize();
         //side motors
         robot.motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -140,7 +144,7 @@ public class ZoDriving extends LinearOpMode {
 
 
         // Wait for the game to start (driver presses PLAY)
-        robot.servoMark.setPosition(.3);
+        robot.servoMark.setPosition(.9);
         tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
         waitForStart();
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
@@ -386,10 +390,10 @@ public class ZoDriving extends LinearOpMode {
 
     public void releaseMarker()
     {
-        robot.servoMark.setPosition(1);
+        robot.servoMark.setPosition(.5);
         sleep(500);
         encoderDrive(DRIVE_SPEED, 5, 5, 5);
-        robot.servoMark.setPosition(.3);
+        robot.servoMark.setPosition(.9);
     }
     public void MoveHookUp(boolean direction){
         double distance = .85;
@@ -400,5 +404,8 @@ public class ZoDriving extends LinearOpMode {
         }
     }
 
+    public double getOffAngle(){
+       return 5;
+    }
 
 }

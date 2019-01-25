@@ -13,28 +13,29 @@ public class ZoDepot extends ZoDriving {
     public void runOpMode()
     {
         super.runOpMode();
-        //startt tensorflow
+        //Start the custom tensorflow object which has already been creatd in the super class
         tf.start();
-        sleep(500);
-        MineralLocation goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
+        //Pause for a second and read the mineral orientation while hanging
+        sleep(1000);
+        TensorFlow.MineralLocation goldMineralLocation = tf.getMineralLocation(TensorFlow.RobotOrientation.Left);
+        sleep(250);
+        //Lower the robot (A boolean decides the direction, passing false lowers the robot)
         MoveHookUp(false);
         sleep(500);
+        telemetry.addData("Mineral Location: ", goldMineralLocation);
+        telemetry.update();
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-
-        latEncoderDrive(.6,  -4,  -4, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        sleep(500);
+        //Move out of the hook to the left, drive forward, and move back towards the center
+        latEncoderDrive(.6,  -7,  -7, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         encoderDrive(DRIVE_SPEED, -5, -5, 5);
-        latEncoderDrive(0.6, 2, 2, 5);
+        latEncoderDrive(0.6, 7, 7, 5);
 
         //uncomment line after problem is resolved
         //MineralLocation goldMineralLocation = MineralLocation.Left;
-        sleep(500);
-        latEncoderDrive(0.6, 2, 2, 5);
+
         if(goldMineralLocation == MineralLocation.Left)
         {
-            gyroDrive(20, xyz, -0.3, 5);
+            gyroDrive(26, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -48, -48, 5);
             gyroDrive(-45, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -20, -20, 5);
@@ -51,7 +52,7 @@ public class ZoDepot extends ZoDriving {
 
         else
         {
-            gyroDrive(-30, xyz, -0.3, 5);
+            gyroDrive(-22, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -40, -40, 5);
             gyroDrive(10, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -45, -45, 5);

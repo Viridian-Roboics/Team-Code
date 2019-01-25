@@ -76,7 +76,7 @@ public class ZoHardware
         motorArmExt.setPower(0);
         motorArmTilt.setPower(0);
         // Here we initialize the servos.
-        servoMark.setPosition(0.0);
+        servoMark.setPosition(0.9);
         servoBox.setPower(0.0);
 
         // Here we set all motors to run with encoders.
@@ -91,5 +91,7 @@ public class ZoHardware
         // Here we initialize the sensors
         sensorRangeR = hwMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
         sensorRangeL = hwMap.get(Rev2mDistanceSensor.class, "sensorRangeL");
+
+
     }
 }
