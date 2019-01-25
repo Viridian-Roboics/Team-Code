@@ -21,7 +21,7 @@ public class ZoDepot extends ZoDriving {
         sleep(250);
         //Lower the robot (A boolean decides the direction, passing false lowers the robot)
         MoveHookUp(false);
-        sleep(500);
+        sleep(250);
         telemetry.addData("Mineral Location: ", goldMineralLocation);
         telemetry.update();
 
@@ -35,10 +35,12 @@ public class ZoDepot extends ZoDriving {
 
         if(goldMineralLocation == MineralLocation.Left)
         {
-            gyroDrive(26, xyz, -0.3, 5);
-            encoderDrive(DRIVE_SPEED, -48, -48, 5);
-            gyroDrive(-45, xyz, -0.3, 5);
-            encoderDrive(DRIVE_SPEED, -20, -20, 5);
+            gyroDrive(26, xyz, -0.5, 5);
+            encoderDrive(DRIVE_SPEED, -43, -43, 5);
+            //gyroDrive(-45, xyz, -0.5, 5);
+            latEncoderDrive(.6,10,10,5);
+            gyroDrive(45, xyz, -0.5, 5);
+            //encoderDrive(DRIVE_SPEED, -20, -20, 5);
             releaseMarker();
         }
 
@@ -46,18 +48,18 @@ public class ZoDepot extends ZoDriving {
         {
             encoderDrive(DRIVE_SPEED, -50, -50, 5);
             releaseMarker();
-            gyroDrive(-45, xyz, -0.3, 5);
+            gyroDrive(45, xyz, -0.3, 5);
 
         }
 
         else
         {
-            gyroDrive(-22, xyz, -0.3, 5);
-            encoderDrive(DRIVE_SPEED, -40, -40, 5);
+            gyroDrive(-22, xyz, -0.5, 5);
+            encoderDrive(DRIVE_SPEED, -38, -38, 5);
             gyroDrive(10, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -45, -45, 5);
-            gyroDrive(-45, xyz, -0.3, 5);
             releaseMarker();
+            gyroDrive(45, xyz, -0.5, 5);
         }
 
         //align with wall

@@ -29,7 +29,7 @@ public class ZoCrater extends ZoDriving {
         sleep(250);
         //Lower the robot (A boolean decides the direction, passing false lowers the robot)
         MoveHookUp(false);
-        sleep(500);
+        sleep(250);
         telemetry.addData("Mineral Location: ", goldMineralLocation);
         telemetry.update();
 
