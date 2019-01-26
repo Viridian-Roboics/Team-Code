@@ -19,6 +19,7 @@ public class ZoDepot extends ZoDriving {
         sleep(1000);
         TensorFlow.MineralLocation goldMineralLocation = tf.getMineralLocation(TensorFlow.RobotOrientation.Left);
         sleep(250);
+        tf.shutdown();
         //Lower the robot (A boolean decides the direction, passing false lowers the robot)
         MoveHookUp(false);
         sleep(250);
@@ -46,7 +47,7 @@ public class ZoDepot extends ZoDriving {
 
         else if(goldMineralLocation == MineralLocation.Center)
         {
-            encoderDrive(DRIVE_SPEED, -50, -50, 5);
+            encoderDrive(DRIVE_SPEED, -55, -55, 5);
             releaseMarker();
             gyroDrive(45, xyz, -0.3, 5);
 
@@ -74,6 +75,5 @@ public class ZoDepot extends ZoDriving {
         //extend arm into crater [ADD LATER WHEN WE HAVE ARM]
 
         //shutdown tensorflow (necessary)
-        tf.shutdown();
     }
 }

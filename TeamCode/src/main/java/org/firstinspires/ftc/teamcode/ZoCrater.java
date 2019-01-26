@@ -27,6 +27,7 @@ public class ZoCrater extends ZoDriving {
         sleep(1000);
         TensorFlow.MineralLocation goldMineralLocation = tf.getMineralLocation(TensorFlow.RobotOrientation.Left);
         sleep(250);
+        tf.shutdown();
         //Lower the robot (A boolean decides the direction, passing false lowers the robot)
         MoveHookUp(false);
         sleep(250);
@@ -75,7 +76,6 @@ public class ZoCrater extends ZoDriving {
         releaseMarker();
         gyroDrive(-45, xyz, 0.3, 5);
         encoderDrive(DRIVE_SPEED, -70, -70, 5);*/
-        tf.shutdown();
 
     }
 }

@@ -48,20 +48,31 @@ public class ZoTeleOp extends OpMode{
             lPower = gamepad1.right_stick_y;
             rPower = gamepad1.right_stick_y;
         }
-        if (gamepad2.right_stick_y != 0)
+
+        else if (gamepad2.right_stick_y != 0)
         {
             lPower = gamepad2.right_stick_y;
             rPower = gamepad2.right_stick_y;
         }
+        else
+        {
+            lPower = 0;
+            rPower = 0;
+        }
         if (gamepad1.right_stick_x != 0)
         {
-            fPower = gamepad1.right_stick_x;
-            bPower = gamepad1.right_stick_x;
+            fPower = -gamepad1.right_stick_x;
+            bPower = -gamepad1.right_stick_x;
         }
-        if (gamepad2.right_stick_x != 0)
+        else if (gamepad2.right_stick_x != 0)
         {
-            fPower = gamepad2.right_stick_x;
-            bPower = gamepad2.right_stick_x;
+            fPower = -gamepad2.right_stick_x;
+            bPower = -gamepad2.right_stick_x;
+        }
+        else
+        {
+            fPower = 0;
+            bPower = 0;
         }
 
 

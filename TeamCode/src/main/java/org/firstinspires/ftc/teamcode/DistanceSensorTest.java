@@ -11,8 +11,10 @@ public class DistanceSensorTest extends ZoDriving {
     {
         super.runOpMode();
         while(opModeIsActive()){
-            double left = super.sensorRangeL.getDistance(DistanceUnit.INCH);
-            double right = super.sensorRangeL.getDistance(DistanceUnit.INCH);
+            //double left = sensorRangeL.getDistance(DistanceUnit.INCH);
+            double left = robot.sensorRangeL.getDistance(DistanceUnit.INCH);
+            //double right = sensorRangeL.getDistance(DistanceUnit.INCH);
+            double right = robot.sensorRangeR.getDistance(DistanceUnit.INCH);
             telemetry.addData("Distance Readings: ", "Left: " + left + " Right: " + right);
             telemetry.update();
         }
