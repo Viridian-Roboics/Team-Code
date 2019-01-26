@@ -64,14 +64,13 @@ public class ZoCrater extends ZoDriving {
             //encoderDrive(DRIVE_SPEED, -45, -45, 5);
         }
 
-        gyroDrive(135, xyz, 0.3, 5); //turn towards depot
+        /*gyroDrive(135, xyz, 0.3, 5); //turn towards depot
         encoderDrive(DRIVE_SPEED, 60, 60, 5); //drive to depot
 
         double tdistance = 5;
-        double cdistance = robot.sensorRangeR.getDistance(DistanceUnit.INCH);
+        double cdistance = sensorRangeR.getDistance(DistanceUnit.INCH);
         latEncoderDrive(DRIVE_SPEED,-(cdistance-tdistance),-(cdistance-tdistance),3);
 
-        /*
         encoderDrive(DRIVE_SPEED, -25, -25, 5);
         releaseMarker();
         gyroDrive(-45, xyz, 0.3, 5);
