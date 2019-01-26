@@ -38,8 +38,8 @@ public class ZoDepot extends ZoDriving {
             gyroDrive(26, xyz, -0.5, 5);
             encoderDrive(DRIVE_SPEED, -43, -43, 5);
             //gyroDrive(-45, xyz, -0.5, 5);
-            latEncoderDrive(.6,10,10,5);
-            gyroDrive(45, xyz, -0.5, 5);
+            latEncoderDrive(.6,25,25,5);
+            gyroDrive(60, xyz, -0.5, 5);
             //encoderDrive(DRIVE_SPEED, -20, -20, 5);
             releaseMarker();
         }
@@ -56,7 +56,7 @@ public class ZoDepot extends ZoDriving {
         {
             gyroDrive(-22, xyz, -0.5, 5);
             encoderDrive(DRIVE_SPEED, -38, -38, 5);
-            gyroDrive(10, xyz, -0.3, 5);
+            gyroDrive(20, xyz, -0.3, 5);
             encoderDrive(DRIVE_SPEED, -45, -45, 5);
             releaseMarker();
             gyroDrive(45, xyz, -0.5, 5);
@@ -64,7 +64,7 @@ public class ZoDepot extends ZoDriving {
 
         //align with wall
         double tdistance = 5;
-        double cdistance = sensorRangeL.getDistance(DistanceUnit.INCH);
+        double cdistance = robot.sensorRangeL.getDistance(DistanceUnit.INCH);
         latEncoderDrive(DRIVE_SPEED,-(cdistance-tdistance),-(cdistance-tdistance),3);
         sleep(250);
 
