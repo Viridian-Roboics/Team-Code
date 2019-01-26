@@ -29,24 +29,26 @@ public class ZoDepot extends ZoDriving {
         //Move out of the hook to the left, drive forward, and move back towards the center
         latEncoderDrive(.6,  -7,  -7, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         encoderDrive(DRIVE_SPEED, -5, -5, 5);
-        latEncoderDrive(0.6, 7, 7, 5);
+
 
         //uncomment line after problem is resolved
         //MineralLocation goldMineralLocation = MineralLocation.Left;
 
         if(goldMineralLocation == MineralLocation.Left)
         {
+            latEncoderDrive(0.6, 7, 7, 5);
             gyroDrive(26, xyz, -0.5, 5);
             encoderDrive(DRIVE_SPEED, -43, -43, 5);
-            //gyroDrive(-45, xyz, -0.5, 5);
-            latEncoderDrive(.6,25,25,5);
-            gyroDrive(60, xyz, -0.5, 5);
-            //encoderDrive(DRIVE_SPEED, -20, -20, 5);
+            gyroDrive(45, xyz, -0.5, 7);
+            encoderDrive(DRIVE_SPEED, -6, -6, 5);
+            latEncoderDrive(.7,25,25,5);
             releaseMarker();
+            //encoderDrive(DRIVE_SPEED, -20, -20, 5);
         }
 
         else if(goldMineralLocation == MineralLocation.Center)
         {
+            latEncoderDrive(0.6, 7, 7, 5);
             encoderDrive(DRIVE_SPEED, -55, -55, 5);
             releaseMarker();
             gyroDrive(45, xyz, -0.3, 5);
@@ -55,22 +57,31 @@ public class ZoDepot extends ZoDriving {
 
         else
         {
-            gyroDrive(-22, xyz, -0.5, 5);
-            encoderDrive(DRIVE_SPEED, -38, -38, 5);
-            gyroDrive(20, xyz, -0.3, 5);
-            encoderDrive(DRIVE_SPEED, -45, -45, 5);
-            releaseMarker();
+            latEncoderDrive(0.6, 7 + 8, 7 + 8, 5);
+            //gyroDrive(-22, xyz, -0.5, 5);
+            encoderDrive(1,-30,-30,3);
+            while(robot.sensorRangeL.getDistance(DistanceUnit.INCH) > 16){
+                encoderDrive(1,-5,-5,3);
+                telemetry.addData("Distance: ", robot.sensorRangeL.getDistance(DistanceUnit.INCH));
+
+            }
+            //enc oderDrive(DRIVE_SPEED, -38, -38, 5);
             gyroDrive(45, xyz, -0.5, 5);
+            encoderDrive(DRIVE_SPEED, -20, -20, 5);
+            releaseMarker();
         }
 
         //align with wall
-        double tdistance = 5;
-        double cdistance = robot.sensorRangeL.getDistance(DistanceUnit.INCH);
-        latEncoderDrive(DRIVE_SPEED,-(cdistance-tdistance),-(cdistance-tdistance),3);
-        sleep(250);
+        //double tdistance = 5;
+        //double cdistance = robot.sensorRangeL.getDistance(DistanceUnit.INCH);
+        //latEncoderDrive(DRIVE_SPEED,-(cdistance-tdistance),-(cdistance-tdistance),3);
+        //encoderDrive(1,-10,-10,3);
+        while(robot.sensorRangeL.getDistance(DistanceUnit.INCH) > 4){
+            encoderDrive(1,-4,-4,3);
+        }
 
         //drive to crater
-        encoderDrive(DRIVE_SPEED, 70, 70, 5);
+        latEncoderDrive(1,-80,-80,10);
 
         //extend arm into crater [ADD LATER WHEN WE HAVE ARM]
 
