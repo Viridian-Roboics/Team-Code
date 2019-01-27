@@ -99,6 +99,7 @@ public class ZoDriving extends LinearOpMode {
     Rev2mDistanceSensor sensorRangeR;
     Rev2mDistanceSensor sensorRangeL;
     BNO055IMU imu;
+    public boolean runTf = true;
     TensorFlow tf;
     @Override
     public void runOpMode() {
@@ -144,8 +145,12 @@ public class ZoDriving extends LinearOpMode {
 
 
         // Wait for the game to start (driver presses PLAY)
-        robot.servoMark.setPosition(.95);
-        tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
+        robot.servoMark.setPosition(.97);
+        if (runTf){
+            tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
+        }else{
+            tf = null;
+        }
         waitForStart();
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
         //tf.start(); //moved to start of program
@@ -239,7 +244,7 @@ public class ZoDriving extends LinearOpMode {
             robot.motorFront.setPower(Math.abs(speed));
             robot.motorBack.setPower(Math.abs(speed));
 
-            // keep looping while we are still active, and there is time left, and both motors are running.
+            // keep looping while we are sill active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
             // its target position, the motion will stop.  This is "safer" in the event that the robot will
             // always end the motion as soon as possible.
@@ -394,7 +399,7 @@ public class ZoDriving extends LinearOpMode {
         //robot.servoMark.setPosition(.9);
     }
     public void MoveHookUp(boolean direction){
-        double distance = .87;
+        double distance = .95;
         if(direction){
             hookEncoder(3, distance, 10);
         }else{

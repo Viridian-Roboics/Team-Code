@@ -36,8 +36,8 @@ public class ZoCrater extends ZoDriving {
 
         //Move out of the hook to the left, drive forward, and move back towards the center
         latEncoderDrive(.6,  -7,  -7, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, -5, -5, 7);
-        latEncoderDrive(0.6, 6.4, 6.4, 5);
+        encoderDrive(DRIVE_SPEED, -6, -6, 7);
+        latEncoderDrive(0.6, 6.2, 6.2, 5);
 
         //The three if statements for handling logic depending on the mineral location
         if(goldMineralLocation == TensorFlow.MineralLocation.Left)
@@ -58,7 +58,7 @@ public class ZoCrater extends ZoDriving {
         else
         {
             //turn left and park if left
-            gyroDrive(-22, xyz, -0.5, 5); //turn to mineral
+            gyroDrive(-23, xyz, -0.5, 5); //turn to mineral
             encoderDrive(DRIVE_SPEED, -40, -40, 7); //hit mineral
             //encoderDrive(DRIVE_SPEED, 15, 15, 5); //backwards back to starting position
             //gyroDrive(120, xyz, -0.3, 5); //turn to wall

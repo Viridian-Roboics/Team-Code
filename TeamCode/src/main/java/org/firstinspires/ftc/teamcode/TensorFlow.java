@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import java.util.ArrayList;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -68,12 +69,47 @@ public class TensorFlow {
         //otherwise, continue with detection
         if(!error) {
             List<Recognition> updatedRecognitions = tfod.getRecognitions();
+            List<Recognition> filteredList = new ArrayList<Recognition>();
+
+            /*for(Recognition recognition : updatedRecognitions){
+                if(recognition.getHeight() < recognition.getImageHeight() * 3 / 11){
+                    filteredList.add(recognition);
+                }
+            }*/
+            //Variabes to store two mins
+            Recognition min1 = null;
+            Recognition min2 = null;
+            //Iterate through all minerals
+            for(Recognition recognition : updatedRecognitions){
+                double height = recognition.getHeight();
+                if (min1 == null){
+                    min1 = recognition;
+                }
+                else if(min2 == null){
+                    min2 = recognition;
+                }
+                else if(height < min1.getHeight()){
+                    min1 = recognition;
+                }
+                else if(height < min2.getHeight()){
+                    min2 = recognition;
+                }
+                if (min1 != null && min2 != null){
+                    if(min1.getHeight() > min2.getHeight()){
+                        Recognition temp = min1;
+                        min1 = min2;
+                        min2 = temp;
+                    }
+                }
+            }
+            filteredList.add(min1);
+            filteredList.add(min2);
             int goldMineralX = -1;
             int silverMineral1X = -1;
             int silverMineral2X = -1;
             //Three Mineral Algorithm
             if(orientation == RobotOrientation.Center){
-                for (Recognition recognition : updatedRecognitions) {
+                for (Recognition recognition : filteredList) {
                     if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                         goldMineralX = (int) recognition.getLeft();
                     } else if (silverMineral1X == -1) {
