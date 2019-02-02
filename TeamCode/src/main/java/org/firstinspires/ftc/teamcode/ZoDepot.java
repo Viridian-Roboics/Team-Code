@@ -27,7 +27,7 @@ public class ZoDepot extends ZoDriving {
         telemetry.update();
 
         //Move out of the hook to the left, drive forward, and move back towards the center
-        latEncoderDrive(.6,  -7,  -7, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        latEncoderDrive(.6,  -6,  -6, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         encoderDrive(DRIVE_SPEED, -5, -5, 5);
 
 
@@ -59,7 +59,7 @@ public class ZoDepot extends ZoDriving {
         else
         {
             encoderDrive(1,-1,-1,3);
-            latEncoderDrive(0.6, 7 + 8.5, 7 + 8.5, 5);
+            latEncoderDrive(0.6, 17, 17, 5);
             //gyroDrive(-22, xyz, -0.5, 5);
             encoderDrive(1,-30,-30,3);
             while(robot.sensorRangeL.getDistance(DistanceUnit.INCH) > 16){
@@ -78,7 +78,7 @@ public class ZoDepot extends ZoDriving {
         //double cdistance = robot.sensorRangeL.getDistance(DistanceUnit.INCH);
         //latEncoderDrive(DRIVE_SPEED,-(cdistance-tdistance),-(cdistance-tdistance),3);
         //encoderDrive(1,-10,-10,3);
-        while(robot.sensorRangeL.getDistance(DistanceUnit.INCH) > 4){
+        while(robot.sensorRangeL.getDistance(DistanceUnit.INCH) > 6){
             encoderDrive(1,-4,-4,3);
         }
 

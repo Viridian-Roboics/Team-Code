@@ -396,6 +396,8 @@ public class ZoDriving extends LinearOpMode {
     public void releaseMarker()
     {
         robot.servoMark.setPosition(.4);
+        sleep(500);
+        robot.servoMark.setPosition(0.95);
         //robot.servoMark.setPosition(.9);
     }
     public void MoveHookUp(boolean direction){
