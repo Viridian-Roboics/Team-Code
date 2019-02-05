@@ -25,7 +25,8 @@ public class ZoCraterRegionals extends ZoDriving {
         tf.start();
         //Pause for a second and read the mineral orientation while hanging
         sleep(1000);
-        TensorFlow.MineralLocation goldMineralLocation = tf.getMineralLocation(TensorFlow.RobotOrientation.Left);
+        TensorFlow.MineralLocation goldMineralLocation = tf.nMineralLocations(TensorFlow.RobotOrientation.Left,5);
+        //TensorFlow.MineralLocation goldMineralLocation = tf.getMineralLocation(TensorFlow.RobotOrientation.Left);
         sleep(250);
         tf.shutdown();
         //Lower the robot (A boolean decides the direction, passing false lowers the robot)

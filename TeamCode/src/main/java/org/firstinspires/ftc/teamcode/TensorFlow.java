@@ -62,6 +62,30 @@ public class TensorFlow {
             tfod.shutdown();
         }
     }
+
+    public MineralLocation nMineralLocations(RobotOrientation orientation, int n){
+        int center = 0;
+        int left = 0;
+        int right = 0;
+        for(int i = 0; i < n; i++){
+           MineralLocation o = getMineralLocation(orientation);
+            if(o == MineralLocation.Center){
+                center++;
+            }else if(o == MineralLocation.Right){
+                right++;
+            }else{
+                left++;
+            }
+        }
+        if(center > left && center > right){
+            return MineralLocation.Center;
+        }else if(right > left){
+            return MineralLocation.Right;
+        }else{
+            return MineralLocation.Left;
+        }
+    }
+
     public MineralLocation getMineralLocation(RobotOrientation orientation){
         //the location of the mineral, defaults to center if TFOD fails or objects or not found
         MineralLocation absoluteLocation = MineralLocation.Center;
