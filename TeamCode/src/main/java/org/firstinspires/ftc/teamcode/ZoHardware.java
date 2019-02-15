@@ -26,10 +26,12 @@ public class ZoHardware
     public DcMotor motorHook;
     public DcMotor motorArmExt;
     public DcMotor motorArmTilt;
+    public DcMotor motorLiftBucket;
 
     // The servo to release the marker
     public Servo servoMark;
-    public CRServo servoBox;
+    public CRServo servoIntake;
+    public Servo servoBox;
 
     // Defining color sensors
     Rev2mDistanceSensor sensorRangeR = null;
@@ -52,9 +54,11 @@ public class ZoHardware
         motorHook  = hwMap.get(DcMotor.class, "motorHook");
         motorArmExt  = hwMap.get(DcMotor.class, "motorArmExt");
         motorArmTilt  = hwMap.get(DcMotor.class, "motorArmTilt");
+        motorLiftBucket = hwMap.get(DcMotor.class, "motorLiftBucket");
         // Here we name the servos.
         servoMark = hwMap.get(Servo.class, "servoMark");
-        servoBox = hwMap.get(CRServo.class, "servoBox");
+        servoIntake = hwMap.get(CRServo.class, "servoIntake");
+        servoBox = hwMap.get(Servo.class, "servoBox");
 
         // Here we set the motor directions.
         motorRight.setDirection(DcMotor.Direction.FORWARD);
@@ -64,6 +68,7 @@ public class ZoHardware
         motorHook.setDirection(DcMotor.Direction.FORWARD);
         motorArmExt.setDirection(DcMotor.Direction.FORWARD);
         motorArmTilt.setDirection(DcMotor.Direction.FORWARD);
+        motorLiftBucket.setDirection(DcMotor.Direction.FORWARD);
 
         // Here we set the servo directions.
 
@@ -75,9 +80,11 @@ public class ZoHardware
         motorHook.setPower(0);
         motorArmExt.setPower(0);
         motorArmTilt.setPower(0);
+        motorLiftBucket.setPower(0);
         // Here we initialize the servos.
         servoMark.setPosition(0.9);
-        servoBox.setPower(0.0);
+        servoIntake.setPower(0.0);
+        servoBox.setPosition(0.0);
 
         // Here we set all motors to run with encoders.
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -87,6 +94,7 @@ public class ZoHardware
         motorHook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorArmExt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorArmTilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLiftBucket.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Here we initialize the sensors
         sensorRangeR = hwMap.get(Rev2mDistanceSensor.class, "sensorRangeR");

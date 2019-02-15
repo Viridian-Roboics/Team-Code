@@ -202,7 +202,7 @@ public class ZoTeleOp extends OpMode{
         robot.motorHook.setPower(hPower);
         robot.motorArmExt.setPower(aPowerExt);
         robot.motorArmTilt.setPower(aPowerTIlt);
-        robot.servoBox.setPower(boxPower);
+        robot.servoBox.setPosition(boxPower);
 
 
 //      TELEMETRY
