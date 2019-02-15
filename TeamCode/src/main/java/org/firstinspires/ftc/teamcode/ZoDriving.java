@@ -62,6 +62,8 @@ import java.io.IOException;
  *  power command moves them forwards, and causes the encoders to count UP.
  *
  *   The desired path in this example is:
+ *
+ *
  *   - Drive forward for 48 inches
  *   - Spin right for 12 Inches
  *   - Drive Backwards for 24 inches
@@ -97,6 +99,7 @@ public class ZoDriving extends LinearOpMode {
     Rev2mDistanceSensor sensorRangeR;
     Rev2mDistanceSensor sensorRangeL;
     BNO055IMU imu;
+    public boolean runTf = true;
     TensorFlow tf;
     @Override
     public void runOpMode() {
@@ -117,8 +120,10 @@ public class ZoDriving extends LinearOpMode {
 
         //int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         //init distance sensors
-        //Rev2mDistanceSensor sensorRangeR = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
-        //Rev2mDistanceSensor sensorRangeL = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeL");
+        Rev2mDistanceSensor sensorRangeR = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeR");
+        Rev2mDistanceSensor sensorRangeL = hardwareMap.get(Rev2mDistanceSensor.class, "sensorRangeL");
+        sensorRangeL.initialize();
+        sensorRangeR.initialize();
         //side motors
         robot.motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -140,8 +145,12 @@ public class ZoDriving extends LinearOpMode {
 
 
         // Wait for the game to start (driver presses PLAY)
-        robot.servoMark.setPosition(0);
-        tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
+        robot.servoMark.setPosition(.97);
+        if (runTf){
+            tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
+        }else{
+            tf = null;
+        }
         waitForStart();
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
         //tf.start(); //moved to start of program
@@ -235,7 +244,7 @@ public class ZoDriving extends LinearOpMode {
             robot.motorFront.setPower(Math.abs(speed));
             robot.motorBack.setPower(Math.abs(speed));
 
-            // keep looping while we are still active, and there is time left, and both motors are running.
+            // keep looping while we are sill active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
             // its target position, the motion will stop.  This is "safer" in the event that the robot will
             // always end the motion as soon as possible.
@@ -386,13 +395,13 @@ public class ZoDriving extends LinearOpMode {
 
     public void releaseMarker()
     {
-        robot.servoMark.setPosition(1);
+        robot.servoMark.setPosition(.4);
         sleep(500);
-        encoderDrive(DRIVE_SPEED, 5, 5, 5);
-        robot.servoMark.setPosition(0);
+        robot.servoMark.setPosition(0.95);
+        //robot.servoMark.setPosition(.9);
     }
     public void MoveHookUp(boolean direction){
-        double distance = .81;
+        double distance = .80;
         if(direction){
             hookEncoder(3, distance, 10);
         }else{
@@ -400,5 +409,8 @@ public class ZoDriving extends LinearOpMode {
         }
     }
 
+    public double getOffAngle(){
+       return 5;
+    }
 
 }

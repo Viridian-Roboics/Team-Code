@@ -24,6 +24,7 @@ public class ZoTeleOp extends OpMode{
     private double hPower = 0; //hook power
     private double aPowerExt = 0; //arm extension power
     private double aPowerTIlt = 0; //arm tilt power
+    private double boxPower = 0; //boxPower
 
     @Override
     public void init() {
@@ -38,16 +39,48 @@ public class ZoTeleOp extends OpMode{
     public void loop() {
 
 //      MAIN DRIVING CONTROLS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        lPower = gamepad1.right_stick_y;
-        rPower = gamepad1.right_stick_y;
-        fPower = -gamepad1.right_stick_x;
-        bPower = -gamepad1.right_stick_x;
+//        lPower = gamepad1.right_stick_y;
+//        rPower = gamepad1.right_stick_y;
+//        fPower = -gamepad1.right_stick_x;
+//        bPower = -gamepad1.right_stick_x;
+        if (gamepad1.right_stick_y != 0)
+        {
+            lPower = gamepad1.right_stick_y;
+            rPower = gamepad1.right_stick_y;
+        }
 
-        if(gamepad1.dpad_up)
+        else if (gamepad2.right_stick_y != 0)
+        {
+            lPower = gamepad2.right_stick_y;
+            rPower = gamepad2.right_stick_y;
+        }
+        else
+        {
+            lPower = 0;
+            rPower = 0;
+        }
+        if (gamepad1.right_stick_x != 0)
+        {
+            fPower = -gamepad1.right_stick_x;
+            bPower = -gamepad1.right_stick_x;
+        }
+        else if (gamepad2.right_stick_x != 0)
+        {
+            fPower = -gamepad2.right_stick_x;
+            bPower = -gamepad2.right_stick_x;
+        }
+        else
+        {
+            fPower = 0;
+            bPower = 0;
+        }
+
+
+        if(gamepad1.dpad_up || gamepad2.dpad_up)
         {
             hPower = -1;
         }
-        else if(gamepad1.dpad_down)
+        else if(gamepad1.dpad_down || gamepad2.dpad_down)
         {
             hPower = 1;
         }
@@ -57,14 +90,14 @@ public class ZoTeleOp extends OpMode{
         }
 
         //rotate
-        if(gamepad1.left_stick_x > 0)
+        if(gamepad1.left_stick_x > 0 || gamepad2.left_stick_x > 0)
         {
             lPower = -1; //lpower used to be 1
             rPower = 1; //rpower used to be -1
             fPower = -1;
             bPower = 1;
         }
-        else if(gamepad1.left_stick_x < 0)
+        else if(gamepad1.left_stick_x < 0 || gamepad2.left_stick_x < 0)
         {
             lPower = 1; //lpower used to be -1
             rPower = -1; //used to be 1
@@ -72,26 +105,26 @@ public class ZoTeleOp extends OpMode{
             bPower = -1;
         }
 
-        if(gamepad1.left_bumper)
+        if(gamepad1.left_bumper || gamepad2.left_bumper)
         {
-            aPowerTIlt = 1;
+            aPowerTIlt = .7;
         }
 
-        else if (gamepad1.right_bumper)
+        else if (gamepad1.right_bumper || gamepad2.right_bumper)
         {
-            aPowerTIlt = -1;
+            aPowerTIlt = -.7;
         }
         else
         {
             aPowerTIlt =0;
         }
 
-        if(gamepad1.left_trigger > 0)
+        if(gamepad1.left_trigger > 0 || gamepad2.left_trigger > 0)
         {
             aPowerExt = 1;
         }
 
-        else if (gamepad1.right_trigger > 0)
+        else if (gamepad1.right_trigger > 0 || gamepad2.right_trigger > 0)
         {
             aPowerExt = -1;
         }
@@ -142,14 +175,24 @@ public class ZoTeleOp extends OpMode{
 
 
 //      SCALING POWERS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        if(gamepad1.y)
-        {
+        if(gamepad1.y || gamepad2.y) {
             lPower *= 0.4;
             rPower *= 0.4;
             fPower *= 0.4;
             bPower *= 0.4;
         }
-
+        if((gamepad1.a && boxPower >= 0) ||(gamepad2.a && boxPower >= 0))
+        {
+            boxPower = -1;
+        }
+        else if((gamepad1.a && boxPower < 0) || (gamepad2.a && boxPower < 0))
+        {
+            boxPower = 1;
+        }
+        if((gamepad1.b && boxPower != 0) || (gamepad2.b && boxPower != 0))
+        {
+            boxPower = 0;
+        }
 //      SETTING POWERS AND POSITIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         robot.motorLeft.setPower(fPower);
@@ -159,6 +202,7 @@ public class ZoTeleOp extends OpMode{
         robot.motorHook.setPower(hPower);
         robot.motorArmExt.setPower(aPowerExt);
         robot.motorArmTilt.setPower(aPowerTIlt);
+        robot.servoBox.setPower(boxPower);
 
 
 //      TELEMETRY
@@ -167,10 +211,11 @@ public class ZoTeleOp extends OpMode{
         telemetry.addData("Front Motor Power", gamepad1.left_stick_x);
         telemetry.addData("Back Motor Power", gamepad1.left_stick_x);
         telemetry.addData("Hook Motor Power", gamepad2.left_stick_y);
-        telemetry.addData("Left Distance", robot.sensorRangeL.getDistance(DistanceUnit.INCH));
         telemetry.addData("Arm Tilt Motor Power", aPowerTIlt);
         telemetry.addData("Arm Ext Motor Power", aPowerExt);
+        telemetry.addData("Box intake Power", boxPower);
         telemetry.addData("Right Distance", robot.sensorRangeR.getDistance(DistanceUnit.INCH));
+        telemetry.addData("Left Distance", robot.sensorRangeL.getDistance(DistanceUnit.INCH));
     }
 
 //--------------------------------- FUNCTIONS ----------------------------------------------------

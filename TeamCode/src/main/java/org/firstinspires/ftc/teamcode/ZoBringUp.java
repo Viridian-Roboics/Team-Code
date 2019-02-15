@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class ZoBringUp extends ZoDriving {
     public void runOpMode()
     {
+        super.runTf = false;
         super.runOpMode();
         MoveHookUp(true);
     }
