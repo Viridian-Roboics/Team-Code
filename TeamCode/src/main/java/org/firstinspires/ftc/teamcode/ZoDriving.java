@@ -145,7 +145,7 @@ public class ZoDriving extends LinearOpMode {
 
 
         // Wait for the game to start (driver presses PLAY)
-        robot.servoMark.setPosition(.97);
+        robot.servoMark.setPosition(0);
         if (runTf){
             tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
         }else{
@@ -401,7 +401,7 @@ public class ZoDriving extends LinearOpMode {
         //robot.servoMark.setPosition(.9);
     }
     public void MoveHookUp(boolean direction){
-        double distance = 2.5;
+        double distance = 1;
         if(direction){
             hookEncoder(3, distance, 10);
         }else{
