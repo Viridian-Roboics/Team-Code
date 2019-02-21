@@ -43,7 +43,6 @@ public class ZoHardware
     // Initialize standard hardware interfaces
     public void init(HardwareMap ahwMap) {
 
-        // save reference to HW Map
         hwMap = ahwMap;
 
         // Here we name the motors.
