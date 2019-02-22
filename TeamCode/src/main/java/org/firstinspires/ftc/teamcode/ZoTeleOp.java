@@ -23,8 +23,14 @@ public class ZoTeleOp extends OpMode{
     private double bPower = 0; //back power
     private double hPower = 0; //hook power
     private double aPowerExt = 0; //arm extension power
-    private double aPowerTIlt = 0; //arm tilt power
+    private double aPowerTIlt = 0; //intake bocx tilt power
+    private double boxLiftPower = 0; // lifty boi power
+
+
     private double boxPower = 0; //boxPower
+    private double boxTilt = 0; // flippy boi
+
+
 
     @Override
     public void init() {
@@ -133,16 +139,29 @@ public class ZoTeleOp extends OpMode{
             aPowerExt =0;
         }
 
+        if (gamepad1.dpad_left || gamepad2.dpad_left)
+        {
+            boxLiftPower = 1;
+        }
+        else if (gamepad1.dpad_right || gamepad2.dpad_right)
+        {
+            boxLiftPower = -1;
+        }
+        else
+        {
+            boxLiftPower = 0;
+        }
 
-//      CONSTRAIN MOTOR POWERS: -1 to 1 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        if(lPower > 1)
+        if ((gamepad1.x || gamepad2.x) & boxTilt == 0)
         {
-            lPower = 1;
+            boxTilt = 1;
         }
-        else if (lPower < -1)
+
+        if ((gamepad1.x || gamepad2.x))
         {
-            lPower = -1;
+            boxTilt *= -1;
         }
+
 
         if(rPower > 1)
         {
@@ -192,6 +211,7 @@ public class ZoTeleOp extends OpMode{
         if((gamepad1.b && boxPower != 0) || (gamepad2.b && boxPower != 0))
         {
             boxPower = 0;
+            boxTilt = 0;
         }
 //      SETTING POWERS AND POSITIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
