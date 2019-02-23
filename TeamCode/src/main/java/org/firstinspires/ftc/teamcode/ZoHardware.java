@@ -31,7 +31,7 @@ public class ZoHardware
     // The servo to release the marker
     public Servo servoMark;
     public CRServo servoIntake;
-    public Servo servoBox;
+    public CRServo servoBox;
 
     // Defining color sensors
     Rev2mDistanceSensor sensorRangeR = null;
@@ -57,7 +57,7 @@ public class ZoHardware
         // Here we name the servos.
         servoMark = hwMap.get(Servo.class, "servoMark");
         servoIntake = hwMap.get(CRServo.class, "servoIntake");
-        servoBox = hwMap.get(Servo.class, "servoBox");
+        servoBox = hwMap.get(CRServo.class, "servoBox");
 
         // Here we set the motor directions.
         motorRight.setDirection(DcMotor.Direction.FORWARD);
@@ -83,7 +83,7 @@ public class ZoHardware
         // Here we initialize the servos.
         servoMark.setPosition(0.9);
         servoIntake.setPower(0.0);
-        servoBox.setPosition(0.0);
+        servoBox.setPower(0);
 
         // Here we set all motors to run with encoders.
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

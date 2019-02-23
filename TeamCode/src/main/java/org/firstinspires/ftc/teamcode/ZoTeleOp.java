@@ -28,8 +28,7 @@ public class ZoTeleOp extends OpMode{
 
 
     private double boxPower = 0; //boxPower
-    private double boxTilt = 0; // flippy boi
-
+    private double boxTilt = 0;
 
 
     @Override
@@ -39,6 +38,12 @@ public class ZoTeleOp extends OpMode{
          */
         robot.init(hardwareMap);
         //robot.sensorColor.enableLed(false);
+        double time =  System.currentTimeMillis();
+        while(System.currentTimeMillis()-500 < time)
+        {
+            robot.motorLiftBucket.setPower(70);
+        }
+        robot.motorLiftBucket.setPower(0);
     }
 
     @Override
@@ -110,15 +115,15 @@ public class ZoTeleOp extends OpMode{
             fPower = 1;
             bPower = -1;
         }
-
+        double tiltPower = .5;
         if(gamepad1.left_bumper || gamepad2.left_bumper)
         {
-            aPowerTIlt = .7;
+            aPowerTIlt = tiltPower;
         }
 
         else if (gamepad1.right_bumper || gamepad2.right_bumper)
         {
-            aPowerTIlt = -.7;
+            aPowerTIlt = -tiltPower;
         }
         else
         {
@@ -151,17 +156,14 @@ public class ZoTeleOp extends OpMode{
         {
             boxLiftPower = 0;
         }
-
-        if ((gamepad1.x || gamepad2.x) & boxTilt == 0)
+        boxTilt = 0;
+        if (gamepad1.x || gamepad2.x)
         {
+           boxTilt = -1;
+        }
+        if(gamepad1.y || gamepad2.y) {
             boxTilt = 1;
         }
-
-        if ((gamepad1.x || gamepad2.x))
-        {
-            boxTilt *= -1;
-        }
-
 
         if(rPower > 1)
         {
@@ -194,12 +196,6 @@ public class ZoTeleOp extends OpMode{
 
 
 //      SCALING POWERS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        if(gamepad1.y || gamepad2.y) {
-            lPower *= 0.4;
-            rPower *= 0.4;
-            fPower *= 0.4;
-            bPower *= 0.4;
-        }
         if((gamepad1.a && boxPower >= 0) ||(gamepad2.a && boxPower >= 0))
         {
             boxPower = -1;
@@ -211,7 +207,6 @@ public class ZoTeleOp extends OpMode{
         if((gamepad1.b && boxPower != 0) || (gamepad2.b && boxPower != 0))
         {
             boxPower = 0;
-            boxTilt = 0;
         }
 //      SETTING POWERS AND POSITIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -222,7 +217,9 @@ public class ZoTeleOp extends OpMode{
         robot.motorHook.setPower(hPower);
         robot.motorArmExt.setPower(aPowerExt);
         robot.motorArmTilt.setPower(aPowerTIlt);
-        robot.servoBox.setPosition(boxPower);
+        robot.motorLiftBucket.setPower(boxLiftPower);
+        robot.servoIntake.setPower(boxPower);
+        robot.servoBox.setPower(boxTilt);
 
 
 //      TELEMETRY
