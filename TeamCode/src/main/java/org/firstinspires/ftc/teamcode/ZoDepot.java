@@ -36,7 +36,8 @@ public class ZoDepot extends ZoDriving {
 
         if(goldMineralLocation == MineralLocation.Left)
         {
-            latEncoderDrive(0.6, 2.5, 2.5, 5);
+            /*
+            latEncoderDrive(DRIVE_SPEED, 2.5, 2.5, 5);
             gyroDrive(26, xyz, -0.5, 5);
             encoderDrive(DRIVE_SPEED, -40, -40, 5);
             gyroDrive(45, xyz, -0.5, 7);
@@ -45,11 +46,25 @@ public class ZoDepot extends ZoDriving {
             latEncoderDrive(.7,30,30,5);
             releaseMarker();
             //encoderDrive(DRIVE_SPEED, -20, -20, 5);
+            */
+            encoderDrive(DRIVE_SPEED,-1,-1,3);
+            latEncoderDrive(0.6, -5, -5, 5);
+            //gyroDrive(-22, xyz, -0.5, 5);
+            encoderDrive(DRIVE_SPEED,-30,-30,3);
+            while(robot.sensorRangeL.getDistance(DistanceUnit.INCH) > 6){
+                encoderDrive(1,-4,-4,3);
+                telemetry.addData("Distance: ", robot.sensorRangeL.getDistance(DistanceUnit.INCH));
+
+            }
+            //enc oderDrive(DRIVE_SPEED, -38, -38, 5);
+            gyroDrive(45, xyz, -0.7, 5);
+            latEncoderDrive(DRIVE_SPEED, 25, 25, 5);
+            releaseMarker();
         }
 
         else if(goldMineralLocation == MineralLocation.Center)
         {
-            latEncoderDrive(0.6, 7, 7, 5);
+            latEncoderDrive(DRIVE_SPEED, 7, 7, 5);
             encoderDrive(DRIVE_SPEED, -50, -55, 5);
             releaseMarker();
             gyroDrive(45, xyz, -0.3, 5);
@@ -58,10 +73,10 @@ public class ZoDepot extends ZoDriving {
 
         else
         {
-            encoderDrive(1,-1,-1,3);
+            encoderDrive(DRIVE_SPEED,-1,-1,3);
             latEncoderDrive(0.6, 17, 17, 5);
             //gyroDrive(-22, xyz, -0.5, 5);
-            encoderDrive(1,-30,-30,3);
+            encoderDrive(DRIVE_SPEED,-30,-30,3);
             while(robot.sensorRangeL.getDistance(DistanceUnit.INCH) > 16){
                 encoderDrive(1,-5,-5,3);
                 telemetry.addData("Distance: ", robot.sensorRangeL.getDistance(DistanceUnit.INCH));

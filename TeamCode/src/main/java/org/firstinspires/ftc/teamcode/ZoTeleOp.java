@@ -39,7 +39,7 @@ public class ZoTeleOp extends OpMode{
         robot.init(hardwareMap);
         //robot.sensorColor.enableLed(false);
         double time =  System.currentTimeMillis();
-        while(System.currentTimeMillis()-500 < time)
+        while(time + 500 > System.currentTimeMillis())
         {
             robot.motorLiftBucket.setPower(70);
         }
