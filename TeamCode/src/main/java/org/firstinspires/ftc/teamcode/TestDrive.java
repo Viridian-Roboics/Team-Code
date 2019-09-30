@@ -32,15 +32,25 @@ public class TestDrive extends TestDriving {
 
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
-        encoderDrive(DRIVE_SPEED,-24,-24,3);
-        gyroDrive(-90, xyz,-1.0, 10);
+        //encoderDrive(DRIVE_SPEED,-24,-24,5);
+
+        sleep(2000);
+
+        //encoderDrive(DRIVE_SPEED,-32,-32,5);
 
 
+            telemetry.addData("Z", readAngle("z"));
+            telemetry.addData("y", readAngle("y"));
+            telemetry.addData("x", readAngle("x"));
+            telemetry.update();
 
-        telemetry.addData("Z", readAngle("z"));
-        telemetry.addData("y", readAngle("y"));
-        telemetry.addData("x", readAngle("x"));
-        telemetry.update();
+
+            //encoderDrive(DRIVE_SPEED, -24, -24, 10);
+            //gyroDrive(-90, xyz, -1.0, 7);
+        correctionDrive(DRIVE_SPEED, -1.0, -48, -48, 20);
+        //gyroDrive(-90, xyz,-1.0, 10);
+
+        //correctionDrive(DRIVE_SPEED, -1.0, -24, -24, 10);
 
     }
 }
