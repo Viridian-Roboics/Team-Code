@@ -326,7 +326,7 @@ public class TestDriving extends LinearOpMode {
     }
     public double pidMultiplier(double error){
         //equation for power multiplier is x/sqrt(x^2 + C)
-        int C = 200;
+        int C = 1000;
         return Math.abs(error/Math.sqrt((error * error) + C));
     }
     public double readAngle(String xyz)
