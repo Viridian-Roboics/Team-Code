@@ -46,9 +46,17 @@ public class TestDrive extends TestDriving {
 
 
             //encoderDrive(DRIVE_SPEED, -24, -24, 10);
-            //gyroDrive(-90, xyz, -1.0, 7);
+        //gyroDrive(-45, xyz, -1.0, 5);
         correctionDrive(DRIVE_SPEED, -1.0, -48, -48, 20);
-        //gyroDrive(-90, xyz,-1.0, 10);
+        //cool course ----->
+        /*
+        encoderDrive(DRIVE_SPEED, -48, -48, 10);
+        gyroDrive(-90, xyz, -1.0, 5);
+        encoderDrive(DRIVE_SPEED, -24, -24, 10);
+        latEncoderDrive(DRIVE_SPEED, 24, 24, 10);
+        encoderDrive(DRIVE_SPEED, 24, 24, 10);
+        latEncoderDrive(DRIVE_SPEED, 20, 20, 10);
+        */
 
         //correctionDrive(DRIVE_SPEED, -1.0, -24, -24, 10);
 

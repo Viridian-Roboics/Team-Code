@@ -77,22 +77,22 @@ import org.firstinspires.ftc.teamcode.TensorFlow.Device;
 public class TestDriving extends LinearOpMode {
 
     /* Declare OpMode members. */
-    TestHardware         robot   = new TestHardware();
-    private ElapsedTime     runtime = new ElapsedTime();
+    TestHardware robot = new TestHardware();
+    private ElapsedTime runtime = new ElapsedTime();
     String xyz = "z";
 
 
-
-    static final double     COUNTS_PER_MOTOR_REV    = 288; //216
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 3.4 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double COUNTS_PER_MOTOR_REV = 288; //216
+    static final double DRIVE_GEAR_REDUCTION = 0.5;     // This is < 1.0 if geared UP
+    static final double WHEEL_DIAMETER_INCHES = 3.4;     // For figuring circumference
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 1;
-    static final double     TURN_SPEED              = 0.5;
+    static final double DRIVE_SPEED = 1;
+    static final double TURN_SPEED = 0.5;
     BNO055IMU imu;
     public boolean runTf = true;
     TensorFlow tf;
+
     @Override
     public void runOpMode() {
         /*
@@ -101,11 +101,11 @@ public class TestDriving extends LinearOpMode {
          */
         robot.init(hardwareMap);
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
@@ -141,8 +141,7 @@ public class TestDriving extends LinearOpMode {
 
     }
 
-    public static double counts(double inches)
-    {
+    public static double counts(double inches) {
         double newInches = (inches - 3.7959) / 1.1239;
         return newInches;
     }
@@ -158,8 +157,8 @@ public class TestDriving extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.motorLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.motorRight.getCurrentPosition() + (int)(rightInches* COUNTS_PER_INCH);
+            newLeftTarget = robot.motorLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newRightTarget = robot.motorRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
             robot.motorLeft.setTargetPosition(newLeftTarget);
             robot.motorRight.setTargetPosition(newRightTarget);
 
@@ -183,18 +182,18 @@ public class TestDriving extends LinearOpMode {
                     (robot.motorLeft.isBusy() && robot.motorRight.isBusy())) {
 
                 //Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-               telemetry.addData("Path2",  "Running at %7d :%7d",
+                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d",
                         robot.motorLeft.getCurrentPosition(),
                         robot.motorRight.getCurrentPosition());
-               telemetry.update();
+                telemetry.update();
             }
 
             // Stop all motion;
             robot.motorLeft.setPower(0);
             robot.motorRight.setPower(0);
-            telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-            telemetry.addData("Path2",  "Running at %7d :%7d",
+            telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+            telemetry.addData("Path2", "Running at %7d :%7d",
                     robot.motorLeft.getCurrentPosition(),
                     robot.motorRight.getCurrentPosition());
             telemetry.update();
@@ -218,8 +217,8 @@ public class TestDriving extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newFrontTarget = robot.motorFront.getCurrentPosition() + (int)(frontInches * COUNTS_PER_INCH);
-            newBackTarget = robot.motorBack.getCurrentPosition() + (int)(backInches * COUNTS_PER_INCH);
+            newFrontTarget = robot.motorFront.getCurrentPosition() + (int) (frontInches * COUNTS_PER_INCH);
+            newBackTarget = robot.motorBack.getCurrentPosition() + (int) (backInches * COUNTS_PER_INCH);
             robot.motorFront.setTargetPosition(newFrontTarget);
             robot.motorBack.setTargetPosition(newBackTarget);
 
@@ -273,7 +272,153 @@ public class TestDriving extends LinearOpMode {
             robot.motorRight.setPower(rpower);
         }
     }
-    public void gyroDrive(double target, String xyz, double power, double timeoutS, boolean reset)
+
+    public double originalAngle;
+
+    public void gyroDrive(double target, String xyz, double topPower, double timeoutS, boolean isCorrection) {
+        //Write code to correct to a target position (NOT FINISHED)
+
+        runtime.reset();
+
+        double angle = readAngle(xyz); //variable for gyro correction around z axis
+        double error = angle - target;
+        double powerScaled = topPower;
+        do {
+            angle = readAngle(xyz);
+            error = angle - target;
+            if (!isCorrection) {
+                powerScaled = topPower * (error / 180) * pidMultiplier(error);
+            }
+
+            //double powerScaled = power*pidMultiplier(error);
+            telemetry.addData("original angle", originalAngle);
+            telemetry.addData("current angle", readAngle(xyz));
+            telemetry.addData("error", error);
+            telemetry.update();
+            if (error > 0) {
+                if (xyz.equals("z")) {
+                    normalDrive(powerScaled, -powerScaled);
+                }
+                if (xyz.equals("y")) {
+                    if (opModeIsActive()) {
+                        robot.motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        robot.motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        robot.motorLeft.setPower(powerScaled);
+                        robot.motorRight.setPower(powerScaled);
+                    }
+                }
+            } else if (error < 0) {
+                if (xyz.equals("z")) {
+                    normalDrive(-powerScaled, powerScaled);
+                }
+                if (xyz.equals("y")) {
+                    if (opModeIsActive()) {
+                        robot.motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        robot.motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        robot.motorLeft.setPower(powerScaled);
+                        robot.motorRight.setPower(powerScaled);
+                    }
+                }
+            }
+//(Math.abs(0-error)>.3)
+            //(error > 0.3 && error > 0) || (error < -0.3 && error < 0)
+        } while (opModeIsActive() && ((error > 0.3) || (error < -0.3)) && (runtime.seconds() < timeoutS));
+        normalDrive(0, 0);
+
+    }
+
+    public double pidMultiplier(double error) {
+        //equation for power multiplier is x/sqrt(x^2 + C)
+        int C = 600;
+        return Math.abs(error / Math.sqrt((error * error) + C));
+    }
+
+    public double readAngle(String xyz) {
+        Orientation angles;
+        Acceleration gravity;
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        if (xyz.equals("x")) {
+            return angles.thirdAngle;
+        } else if (xyz.equals("y")) {
+            return angles.secondAngle;
+        } else if (xyz.equals("z")) {
+            return angles.firstAngle;
+        } else {
+            return 0;
+        }
+    }
+
+    public double getOffAngle() {
+        return 5;
+    }
+
+    public void correctionDrive(double speed, double power, double leftInches, double rightInches,
+                                double timeoutS) {
+        originalAngle = readAngle(xyz);
+        double powerScaled = power * pidMultiplier(originalAngle);
+        int newLeftTarget;
+        int newRightTarget;
+        double lastCorrection = 0;
+
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newLeftTarget = robot.motorLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newRightTarget = robot.motorRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            robot.motorLeft.setTargetPosition(newLeftTarget);
+            robot.motorRight.setTargetPosition(newRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            robot.motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            robot.motorLeft.setPower(Math.abs(speed));
+            robot.motorRight.setPower(Math.abs(speed));
+
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+            // its target position, the motion will stop.  This is "safer" in the event that the robot will
+            // always end the motion as soon as possible.
+            // However, if you require that BOTH motors have finished their moves before the robot continues
+            // onto the next step, use (isBusy() || isBusy()) in the loop test.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.motorLeft.isBusy() && robot.motorRight.isBusy())) {
+
+                double angleDifference = Math.abs(readAngle(xyz)) - Math.abs(originalAngle);
+
+                if (angleDifference > 3) {
+
+                    gyroDrive(originalAngle, xyz, -power, timeoutS - getRuntime(), true);
+//                    lastCorrection = getRuntime();
+                    robot.motorLeft.setTargetPosition(newLeftTarget - robot.motorLeft.getCurrentPosition());
+                    robot.motorRight.setTargetPosition(newRightTarget - robot.motorRight.getCurrentPosition());
+                    robot.motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.motorLeft.setPower(Math.abs(speed));
+                    robot.motorRight.setPower(Math.abs(speed));
+                }
+                telemetry.addData("distance", newLeftTarget - robot.motorLeft.getCurrentPosition());
+                telemetry.update();
+
+            }
+
+            // Stop all motion;
+            robot.motorLeft.setPower(0);
+            robot.motorRight.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            robot.motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        }
+    }
+
+    public void oldGyroDrive(double target, String xyz, double power, double timeoutS)
     {
         //Write code to correct to a target position (NOT FINISHED)
 
@@ -324,94 +469,4 @@ public class TestDriving extends LinearOpMode {
         normalDrive(0,0);
 
     }
-    public double pidMultiplier(double error){
-        //equation for power multiplier is x/sqrt(x^2 + C)
-        int C = 1000;
-        return Math.abs(error/Math.sqrt((error * error) + C));
-    }
-    public double readAngle(String xyz)
-    {
-        Orientation angles;
-        Acceleration gravity;
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        if(xyz.equals("x")){
-            return angles.thirdAngle;
-        }else if(xyz.equals("y")){
-            return angles.secondAngle;
-        }else if(xyz.equals("z")){
-            return angles.firstAngle;
-        }else{
-            return 0;
-        }
-    }
-
-    public double getOffAngle(){
-       return 5;
-    }
-
-    public void correctionDrive(double speed, double power, double leftInches, double rightInches,
-                                double timeoutS)
-    {
-        double originalAngle = readAngle(xyz);
-        double powerScaled = power*pidMultiplier(originalAngle);
-        int newLeftTarget;
-        int newRightTarget;
-        double lastCorrection = 0;
-
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
-
-            // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.motorLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.motorRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.motorLeft.setTargetPosition(newLeftTarget);
-            robot.motorRight.setTargetPosition(newRightTarget);
-
-            // Turn On RUN_TO_POSITION
-            robot.motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            robot.motorLeft.setPower(Math.abs(speed));
-            robot.motorRight.setPower(Math.abs(speed));
-
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
-            // its target position, the motion will stop.  This is "safer" in the event that the robot will
-            // always end the motion as soon as possible.
-            // However, if you require that BOTH motors have finished their moves before the robot continues
-            // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (robot.motorLeft.isBusy() && robot.motorRight.isBusy())) {
-
-                double angleDifference = Math.abs(readAngle(xyz))-Math.abs(originalAngle);
-
-                if(angleDifference > 3 && getRuntime() - lastCorrection > 1) {
-                    gyroDrive(angleDifference, xyz, power, timeoutS-getRuntime(), false);
-                    lastCorrection = getRuntime();
-                    robot.motorLeft.setTargetPosition(newLeftTarget-robot.motorLeft.getCurrentPosition());
-                    robot.motorRight.setTargetPosition(newRightTarget-robot.motorRight.getCurrentPosition());
-                    robot.motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.motorLeft.setPower(Math.abs(speed));
-                    robot.motorRight.setPower(Math.abs(speed));
-                }
-
-            }
-
-            // Stop all motion;
-            robot.motorLeft.setPower(0);
-            robot.motorRight.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            robot.motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        }
-    }
-
-
 }
