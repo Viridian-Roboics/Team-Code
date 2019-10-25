@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="Teleop", group="Zippo")
-//@Disabled
+@TeleOp(name="TestTeleop", group="Zippo")
+//@Disabledj
 
 //THE KEY BELOW IS FOR USING IMAGE RECOGNITION -PULKIT
 //AT5CUvf/////AAAAGaBn6TlejU79iRr5dpGz0Msa4+WbMquS0c0rHQGMURBOGIxPznOmaavjYRYfWHE/qRnpaHDvKIVV1drOmZguwKjiTVfUzVpkRgxdFzcVDsNBldxzhrcSl+bRKGlNv3zKHDfaOJioTa7uzIN/uKUzdJPX+o5PQQxRPYXBuIvAkASbZ9/MVjq5u3Jltyw3Gz9DCPVgxqcMKILOwv9FpMDMRTcgeRwk7f+pPd8f5FmB8ehr3xiDbPxydmYAkpuqQ6Mx2qiggbSlzl4uTm2JeqOP3hbej+ozcevtHKh9C4S3eKodfDUpKekBfdOuR2aer0FwrWxfAqmdOewy5Tei71lLAOgEzx+vo6OPKpSzbTh1gFzI
@@ -18,6 +18,9 @@ public class TestTeleop extends OpMode{
     private double rPower = 0; //right wheel
     private double fPower = 0; //front power
     private double bPower = 0; //back power
+    private double llpower = 0; // left lift power
+    private double rlpower = 0; // right lift power
+
 
 
 
@@ -77,6 +80,11 @@ public class TestTeleop extends OpMode{
             fPower = .5;
             bPower = -.5;
         }
+        if (gamepad1.dpad_up || gamepad2.dpad_up)
+        {
+            llpower = .5;
+            rlpower = .5;
+        }
 
         if(rPower > 1)
         {
@@ -124,6 +132,8 @@ public class TestTeleop extends OpMode{
         robot.motorRight.setPower(bPower);
         robot.motorFront.setPower(rPower);
         robot.motorBack.setPower(lPower);
+        robot.leftLift.setPower(llpower);
+        robot.rightLift.setPower(rlpower);
 
 
 

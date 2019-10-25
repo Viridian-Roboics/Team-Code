@@ -6,6 +6,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -17,8 +18,9 @@ public class TestHardware
     public DcMotor motorRight;
     public DcMotor motorFront;
     public DcMotor motorBack;
-    // The motor to raise and lower the hook
-   
+    public DcMotor leftLift;
+    public DcMotor rightLift;
+
     // Define hardware map
     HardwareMap hwMap;
 
@@ -32,12 +34,18 @@ public class TestHardware
         motorRight = hwMap.get(DcMotor.class, "motorRight");
         motorBack  = hwMap.get(DcMotor.class, "motorBack");
         motorFront  = hwMap.get(DcMotor.class, "motorFront");
-       
+        leftLift  = hwMap.get(DcMotor.class, "leftLift");
+        rightLift  = hwMap.get(DcMotor.class, "rightLift");
+
+
         // Here we set the motor directions.
         motorRight.setDirection(DcMotor.Direction.FORWARD);
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorFront.setDirection(DcMotor.Direction.FORWARD);
         motorBack.setDirection(DcMotor.Direction.REVERSE);
+        leftLift.setDirection(DcMotor.Direction.FORWARD);
+        rightLift.setDirection(DcMotor.Direction.REVERSE);
+
         
 
         // Here we set the servo directions.
@@ -47,6 +55,8 @@ public class TestHardware
         motorRight.setPower(0);
         motorFront.setPower(0);
         motorBack.setPower(0);
+        leftLift.setPower(0);
+        rightLift.setPower(0);
        
 
         // Here we set all motors to run with encoders.
@@ -54,6 +64,8 @@ public class TestHardware
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         
 
 
