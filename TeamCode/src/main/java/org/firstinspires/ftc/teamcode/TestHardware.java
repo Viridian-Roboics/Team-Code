@@ -7,7 +7,8 @@ import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Servo;import com.qualcomm.robotcore.hardware.ColorSensor;
+
 
 public class TestHardware
 {
@@ -18,7 +19,17 @@ public class TestHardware
     public DcMotor motorFront;
     public DcMotor motorBack;
     // The motor to raise and lower the hook
-   
+
+    public Servo servoPull = null;
+
+/*
+    Rev2mDistanceSensor sensorRange = null;
+
+    ColorSensor colorL;
+    ColorSensor colorR;
+*/
+
+
     // Define hardware map
     HardwareMap hwMap;
 
@@ -54,8 +65,16 @@ public class TestHardware
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        
+
+        servoPull = hwMap.get(Servo.class, "servoPull");
+        servoPull.setPosition(0.5);
 
 
+
+        /*
+        colorL = hwMap.get(ColorSensor.class, "colorL");
+        colorR = hwMap.get(ColorSensor.class, "colorR");
+        sensorRange = hwMap.get(Rev2mDistanceSensor.class, "sensorRange");
+*/
     }
 }

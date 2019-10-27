@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
@@ -45,20 +46,29 @@ public class TestDrive extends TestDriving {
             telemetry.update();
 
 
+            /*
             //encoderDrive(DRIVE_SPEED, -24, -24, 10);
-        //gyroDrive(-45, xyz, -1.0, 5);
-        correctionDrive(DRIVE_SPEED, -1.0, -48, -48, 20);
-        //cool course ----->
-        /*
-        encoderDrive(DRIVE_SPEED, -48, -48, 10);
-        gyroDrive(-90, xyz, -1.0, 5);
-        encoderDrive(DRIVE_SPEED, -24, -24, 10);
-        latEncoderDrive(DRIVE_SPEED, 24, 24, 10);
-        encoderDrive(DRIVE_SPEED, 24, 24, 10);
-        latEncoderDrive(DRIVE_SPEED, 20, 20, 10);
+        while(robot.sensorRange.getDistance(DistanceUnit.INCH) > 6){
+            encoderDrive(DRIVE_SPEED,-4,-4,3);
+            telemetry.addData("Distance: ", robot.sensorRange.getDistance(DistanceUnit.INCH));
+        }
         */
 
-        //correctionDrive(DRIVE_SPEED, -1.0, -24, -24, 10);
+        //this is where we will take input from color sensors
+        /*
+        sleep(250);
+        encoderDrive(DRIVE_SPEED, 5, 5, 10);
+        gyroDrive(-90, xyz, -1.0, 5, false);
+        latEncoderDrive(DRIVE_SPEED, -32,-32, 10);
+        sleep(500);
+        encoderDrive(DRIVE_SPEED, 12, 12, 10);
+        latEncoderDrive(DRIVE_SPEED, -10,-10, 10);
+        sleep(250);
+        latEncoderDrive(DRIVE_SPEED, 10, 10, 10);
+        encoderDrive(DRIVE_SPEED, -13, -13, 10);
+        latEncoderDrive(DRIVE_SPEED, 24, 24, 10);
+        encoderDrive(DRIVE_SPEED, -64, -64, 10);
+        */
 
     }
 }

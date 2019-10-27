@@ -309,7 +309,7 @@ public class TestDriving extends LinearOpMode {
                 }
             } else if (error < 0) {
                 if (xyz.equals("z")) {
-                    normalDrive(-powerScaled, powerScaled);
+                    normalDrive(powerScaled, -powerScaled);
                 }
                 if (xyz.equals("y")) {
                     if (opModeIsActive()) {
