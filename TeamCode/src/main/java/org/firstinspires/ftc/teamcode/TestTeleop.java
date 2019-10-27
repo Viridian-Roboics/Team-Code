@@ -45,47 +45,59 @@ public class TestTeleop extends OpMode{
 //        bPower = -gamepad1.right_stick_x;
         if (gamepad1.right_stick_y != 0)
         {
-            lPower = gamepad1.right_stick_y;
-            rPower = gamepad1.right_stick_y;
+            fPower = gamepad1.right_stick_y;
+            bPower = gamepad1.right_stick_y;
         }
-        else
-        {
-            lPower = 0;
-            rPower = 0;
-        }
-        if (gamepad1.right_stick_x != 0)
-        {
-            fPower = -gamepad1.right_stick_x;
-            bPower = -gamepad1.right_stick_x;
-        }
-
         else
         {
             fPower = 0;
             bPower = 0;
         }
+        if (gamepad1.right_stick_x != 0)
+        {
+            rPower = gamepad1.right_stick_x;
+            lPower = gamepad1.right_stick_x;
+        }
+
+        else
+        {
+            rPower = 0;
+            lPower = 0;
+        }
 
         //rotate
         if(gamepad1.left_stick_x > 0 || gamepad2.left_stick_x > 0)
         {
-            lPower = -.5; //lpower used to be 1
-            rPower = .5; //rpower used to be -1
-            fPower = -.5;
-            bPower = .5;
+            lPower = -.2; //lpower used to be 1
+            rPower = .2; //rpower used to be -1
+            fPower = -.2;
+            bPower = .2;
         }
         else if(gamepad1.left_stick_x < 0 || gamepad2.left_stick_x < 0)
         {
-            lPower = .5; //lpower used to be -1
-            rPower = -.5; //used to be 1
-            fPower = .5;
-            bPower = -.5;
+            lPower = .2; //lpower used to be -1
+            rPower = -.2; //used to be 1
+            fPower = .2;
+            bPower = -.2;
         }
         if (gamepad1.dpad_up || gamepad2.dpad_up)
         {
             llpower = .5;
             rlpower = .5;
         }
+        else if (gamepad1.dpad_down || gamepad2.dpad_down)
+        {
+            llpower = -.5;
+            rlpower = -.5;
 
+        }
+        else
+        {
+            llpower = 0;
+            rlpower = 0;
+
+
+        }
         if(rPower > 1)
         {
             rPower = 1;
