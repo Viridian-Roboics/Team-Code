@@ -20,6 +20,10 @@ public class TestTeleop extends OpMode{
     private double bPower = 0; //back power
     private double llpower = 0; // left lift power
     private double rlpower = 0; // right lift power
+    private double stpower = 0;//servo twist
+    private double sgpower = 0;//servo grab
+    private double sdpower = 0;//servo drag
+
 
 
 
@@ -98,6 +102,46 @@ public class TestTeleop extends OpMode{
 
 
         }
+        if (gamepad1.left_bumper ||gamepad2.left_bumper)
+        {
+            stpower = .3;
+        }
+        else if(gamepad1.right_bumper||gamepad2.right_bumper)
+        {
+            stpower = -.3;
+        }
+        else
+            {
+                stpower = 0;
+            }
+        if (gamepad1.a ||gamepad2.a)
+        {
+            sgpower = .3;
+        }
+        else if(gamepad1.b||gamepad2.b)
+        {
+            sgpower = -.3;
+        }
+        else
+        {
+            sgpower = 0;
+        }
+        if (gamepad1.x ||gamepad2.x)
+        {
+            sdpower = .3;
+        }
+        else if(gamepad1.y||gamepad2.y)
+        {
+            stpower = -.3;
+        }
+        else
+        {
+            stpower = 0;
+        }
+
+
+
+
         if(rPower > 1)
         {
             rPower = 1;

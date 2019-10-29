@@ -20,6 +20,12 @@ public class TestHardware
     public DcMotor motorBack;
     public DcMotor leftLift;
     public DcMotor rightLift;
+    public CRServo servoTwist;
+    public CRServo servoGrab;
+    public CRServo servoDrag;
+
+
+
 
     // Define hardware map
     HardwareMap hwMap;
@@ -36,6 +42,10 @@ public class TestHardware
         motorFront  = hwMap.get(DcMotor.class, "motorFront");
         leftLift  = hwMap.get(DcMotor.class, "leftLift");
         rightLift  = hwMap.get(DcMotor.class, "rightLift");
+        servoTwist = hwMap.get(CRServo.class, "servoTwist");
+        servoGrab = hwMap.get(CRServo.class, "servoGrab");
+        servoDrag = hwMap.get(CRServo.class, "servoDrag");
+
 
 
         // Here we set the motor directions.
@@ -57,8 +67,10 @@ public class TestHardware
         motorBack.setPower(0);
         leftLift.setPower(0);
         rightLift.setPower(0);
-       
 
+        servoTwist.setPower(0);
+        servoGrab.setPower(0);
+        servoDrag.setPower(0);
         // Here we set all motors to run with encoders.
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
